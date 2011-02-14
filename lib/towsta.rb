@@ -1,5 +1,5 @@
+require File.expand_path('../towsta/metabase', __FILE__)
+
 module Towsta
-  def self.ola_mundo
-    puts "ola mundo"
-  end
 end
+
