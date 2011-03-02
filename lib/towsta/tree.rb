@@ -1,7 +1,8 @@
 module Towsta
-  class Tree
 
-    attr_accessor :parent, :item, :left, :right
+ class Tree
+
+    attr_accessor :item, :left, :right
 
     def initialize element
       @item = element
@@ -13,19 +14,18 @@ module Towsta
 
     def add_left tree
       @left = tree
-      tree.parent = self
     end
 
     def add_right tree
       @right = tree
-      tree.parent = self
     end
 
     def find id
-      return self if item.id == id
-      return @right.find id if item.id > id && @right
+      return self.item if @item.id == id
+      return @right.find id if @right && @item.id > id
       return @left.find id if @left
     end
 
   end
+
 end
