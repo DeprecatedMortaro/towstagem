@@ -49,11 +49,6 @@ module Towsta
       end
     end
 
-    def self.update_or_create arg
-      args = JSON.parse arg
-      eval(args[:vertical]).update_or_create args[:attributes]
-    end
-
     def just_do_it
       return false if @hash == " "
       begin

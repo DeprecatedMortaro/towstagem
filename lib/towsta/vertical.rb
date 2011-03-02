@@ -40,11 +40,6 @@ module Towsta
           self.tree ? self.tree.find(id) : nil
         end
 
-        def self.update_or_create args
-          element = self.find args[:id]
-          element ? element.update(args) : self.new(args)
-        end
-
         def initialize args
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
           self.class.tree ? self.class.tree.add(self) : self.class.tree=(Tree.new(self))
@@ -53,6 +48,12 @@ module Towsta
 
         def update args
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
+        end
+
+        def destroy id
+          element = self.find id
+          self.all.delete element
+          self.tree.delete element
         end
 
         def find_horizontal id

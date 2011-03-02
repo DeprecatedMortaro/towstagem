@@ -2,7 +2,7 @@ module Towsta
 
  class Tree
 
-    attr_accessor :item, :left, :right
+    attr_accessor :parent, :item, :left, :right
 
     def initialize element
       @item = element
@@ -14,10 +14,15 @@ module Towsta
 
     def add_left tree
       @left = tree
+      @left.parent = self
     end
 
     def add_right tree
       @right = tree
+      @right.parent = self
+    end
+
+    def delete element
     end
 
     def find id
