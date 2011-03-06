@@ -50,10 +50,21 @@ module Towsta
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
         end
 
-        def destroy id
+        def self.update args
+          self.find(args[:id]).update(args)
+        end
+
+        def destroy
+          self.class.all.delete element
+          self.class.tree.delete element
+          self
+        end
+
+        def self.destroy id
           element = self.find id
           self.all.delete element
           self.tree.delete element
+          element
         end
 
         def find_horizontal id

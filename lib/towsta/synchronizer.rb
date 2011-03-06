@@ -24,6 +24,9 @@ module Towsta
         if @json == " "
           puts 'Maybe your secret is wrong...'
           return false
+        elsif @json[0] != "{"
+          puts "something wrong with the server"
+          return false
         else
           return true
         end
@@ -67,6 +70,17 @@ module Towsta
       end
       true
     end    
+
+    def self.callback json
+      json = JSON.parse json
+      if json[:action] == 'create'
+        eval(json[:vertical]).new json[:attributes]
+      elsif json[:action] == 'update'
+        eval(json[:vertical]).find(json[:attributes][:id]).update json[:attributes]
+      else
+        eval(json[:vertical]).destroy json[:attributes][:id]
+      end
+    end
 
   end
 
