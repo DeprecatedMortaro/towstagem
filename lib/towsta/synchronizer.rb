@@ -72,7 +72,7 @@ module Towsta
     end    
 
     def self.callback json
-      json = JSON.parse json
+      json = JSON.parse json, :symbolize_names => true
       if json[:action] == 'create'
         eval(json[:vertical]).new json[:attributes]
       elsif json[:action] == 'update'

@@ -47,6 +47,7 @@ module Towsta
         end
 
         def update args
+          args = args.delete(:author)
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
         end
 
@@ -55,8 +56,8 @@ module Towsta
         end
 
         def destroy
-          self.class.all.delete element
-          self.class.tree.delete element
+          self.class.all.delete self
+          self.class.tree.delete self
           self
         end
 
