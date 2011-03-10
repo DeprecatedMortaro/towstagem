@@ -76,7 +76,7 @@ module Towsta
       if json[:action] == 'create'
         eval(json[:vertical]).new json[:attributes]
       elsif json[:action] == 'update'
-        eval(json[:vertical]).find(json[:attributes][:id]).update json[:attributes]
+        eval(json[:vertical]).update json[:attributes]
       else
         eval(json[:vertical]).destroy json[:attributes][:id]
       end
