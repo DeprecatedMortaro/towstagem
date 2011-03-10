@@ -47,7 +47,6 @@ module Towsta
         end
 
         def update args
-          args = args.delete(:author)
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
         end
 
