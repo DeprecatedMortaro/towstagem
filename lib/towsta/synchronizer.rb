@@ -73,13 +73,9 @@ module Towsta
 
     def self.callback json
       json = JSON.parse json, :symbolize_names => true
-      if json[:action] == 'create'
-        eval(json[:vertical]).new json[:attributes]
-      elsif json[:action] == 'update'
-        eval(json[:vertical]).update json[:attributes]
-      else
-        eval(json[:vertical]).destroy json[:attributes][:id]
-      end
+      return eval(json[:vertical]).new json[:attributes] if json[:action] == 'create'
+      return eval(json[:vertical]).update json[:attributes] if json[:action] == 'update'
+      eval(json[:vertical]).destroy json[:attributes][:id]
     end
 
   end
