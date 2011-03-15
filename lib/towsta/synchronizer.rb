@@ -78,6 +78,10 @@ module Towsta
       eval(json[:vertical]).destroy json[:attributes][:id]
     end
 
+    def authenticate code
+      JSON.parse Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/#{code}.json").body}, :symbolize_names => true
+    end
+
   end
 
 end
