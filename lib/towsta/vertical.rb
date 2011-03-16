@@ -68,7 +68,11 @@ module Towsta
         end
 
         def save creator=$towsta_default_author
-          export = self.attributes.merge(:creator => creator)
+          export = self.attributes.delete :author
+          export = {:creator => creator, :vertical => self.class.to_s, :attributes => export.delete(:id), :id => export[:id]}
+          uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/insert.json")
+          response = Net::HTTP.post_form(uri, {:code => export.to_json})
+          puts response
         end
 
         def attributes
