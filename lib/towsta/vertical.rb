@@ -69,7 +69,7 @@ module Towsta
 
         def save creator=$towsta_default_author
           horizontal = {:author => author, :vertical => self.class.to_s}
-          attributes.each {|attr| horizontal[attr] = eval(attr.to_s)}
+          self.class.attributes.each {|attr| horizontal[attr] = eval(attr.to_s)}
           horizontal
         end
 
@@ -83,7 +83,7 @@ module Towsta
 
       end
       klass.all = []
-      klass.attributes = args.keys
+      klass.attributes = args[:slices].keys
       Object.const_set args[:name], klass
     end
 
