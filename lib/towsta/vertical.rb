@@ -83,6 +83,7 @@ module Towsta
 
       end
       klass.all = []
+      klass.attributes = args.keys
       Object.const_set args[:name], klass
     end
 
