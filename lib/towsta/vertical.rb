@@ -68,7 +68,11 @@ module Towsta
         end
 
         def save creator=$towsta_default_author
-          horizontal = {:author => author, :vertical => self.class.to_s}
+          export = self.attributes.merge(:creator => creator)
+        end
+
+        def attributes
+          horizontal = {:vertical => self.class.to_s}
           self.class.attributes.each {|attr| horizontal[attr] = eval(attr.to_s)}
           horizontal
         end
