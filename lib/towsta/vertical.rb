@@ -15,7 +15,7 @@ module Towsta
 
         class << self
           attr_accessor :all, :tree, :attributes
-          attributes = []
+          attributes = args.keys
         end
 
         args[:slices].each do |attr, kind|
@@ -23,7 +23,6 @@ module Towsta
           eval "def #{attr}; #{Vertical.parse_get attr, kind}; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr} == value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found = []; self.all.each {|e| found << e if e.#{attr} == value}; found; end;"
-          self.attributes << eval(attr)
         end
 
         def self.count
@@ -71,7 +70,7 @@ module Towsta
 
         def save creator=$towsta_default_author
           horizontal = {:author => author, :vertical => self.class.to_s}
-          attributes.each {|attr| eval "horizontal[:#{attr}] = #{attr}"}
+          attributes.each {|attr| horizontal[attr] = eval(attr.to_s)}
           horizontal
         end
 
