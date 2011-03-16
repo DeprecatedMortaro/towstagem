@@ -23,7 +23,7 @@ module Towsta
           eval "def #{attr}; #{Vertical.parse_get attr, kind}; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr} == value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found = []; self.all.each {|e| found << e if e.#{attr} == value}; found; end;"
-          @attributes << eval(attr)
+          @attributes << eval(attr.to_s)
         end
 
         def self.count
