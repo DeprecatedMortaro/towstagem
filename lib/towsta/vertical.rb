@@ -67,6 +67,12 @@ module Towsta
           element
         end
 
+        def save creator=$towsta_default_author
+          horizontal = {:author => author, :vertical => self.class.to_s}
+          args.each {|arg, kind| eval "horizontal[:#{arg}] = #{arg}"}
+          horizontal
+        end
+
         def find_horizontal id
           Vertical.all.each do |v|
             horizontal = v.find_by_id id.to_i
