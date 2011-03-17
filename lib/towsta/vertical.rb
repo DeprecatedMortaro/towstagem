@@ -1,6 +1,12 @@
 require 'date'
 require 'time'
 
+class String
+  def escape_single_quotes
+    self.gsub(/'/, "\\\\'")
+  end
+end
+
 module Towsta
 
   class Vertical
@@ -112,7 +118,7 @@ module Towsta
       end
 
       def self.parse_set attr, kind
-        return "@#{attr} = %{\#{value}};" if ['main','text','formated','password','link'].include? kind
+        return "@#{attr} = value.escape_single_quotes;" if ['main','text','formated','password','link'].include? kind
         return "@#{attr} = value.to_f;" if kind == 'money'
         return "@#{attr} = value.to_i;" if kind == 'integer'
         return "@#{attr} = value == '1';" if kind == 'boolean'
