@@ -71,11 +71,12 @@ module Towsta
           id_aux = export.delete(:id)
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/insert.json")
-          JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
+          response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
+          self.id = response[:id] if response[:status]
         end
 
         def self.create args
-          self.new(args).save
+          self.new(args.merge(:id => nil)).save
         end
 
         def attributes
