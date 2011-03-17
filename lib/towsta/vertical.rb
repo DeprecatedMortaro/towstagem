@@ -74,7 +74,7 @@ module Towsta
           id_aux = export.delete(:id)
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/insert.json")
-          JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).to_s, :sybolize_names => true
+          JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :sybolize_names => true
         end
 
         def attributes
