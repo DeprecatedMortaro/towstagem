@@ -70,6 +70,7 @@ module Towsta
         def save creator=$towsta_default_author
           export = self.attributes
           export.delete :author
+          export.delete :vertical
           id_aux = export.delete(:id)
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
           return export
