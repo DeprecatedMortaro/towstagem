@@ -73,6 +73,7 @@ module Towsta
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/insert.json")
           response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
           self.id = response[:id] if response[:status]
+          response
         end
 
         def self.create args
