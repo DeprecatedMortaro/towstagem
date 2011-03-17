@@ -14,7 +14,7 @@ module Towsta
       klass = Class.new do
 
         class << self
-          attr_accessor :all, :tree, :attributes
+          attr_accessor :all, :attributes
         end
 
         args[:slices].each do |attr, kind|
@@ -37,12 +37,11 @@ module Towsta
         end
 
         def self.find id
-          self.tree ? self.tree.find(id) : nil
+          self.find_by_id id
         end
 
         def initialize args
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
-          self.class.tree ? self.class.tree.add(self) : self.class.tree=(Tree.new(self))
           self.class.all << self
         end
 
@@ -56,14 +55,12 @@ module Towsta
 
         def destroy
           self.class.all.delete self
-          self.class.tree.delete self
           self
         end
 
         def self.destroy id
           element = self.find id
           self.all.delete element
-          self.tree.delete element
           element
         end
 
