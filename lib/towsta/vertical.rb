@@ -77,7 +77,7 @@ module Towsta
         end
 
         def self.rand
-          self.all[rand((self.count) - 1)]
+          self.all[rand((self.all.size) - 1)]
         end
 
         def self.create args
