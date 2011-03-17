@@ -76,8 +76,9 @@ module Towsta
           response
         end
 
-        def self.rand
-          self.all[rand((self.all.size) - 1)]
+        def self.random
+          position = (self.all.size) - 1
+          self.all[rand(position)]
         end
 
         def self.create args
