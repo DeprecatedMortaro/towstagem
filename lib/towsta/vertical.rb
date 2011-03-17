@@ -76,6 +76,10 @@ module Towsta
           response
         end
 
+        def self.rand
+          self.all[rand(self.count -1)]
+        end
+
         def self.create args
           self.new(args.merge(:id => nil)).save
         end
