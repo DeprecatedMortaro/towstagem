@@ -64,6 +64,12 @@ module Towsta
           element
         end
 
+        def self.to_hash
+          hashes = []
+          self.all.each {|hash| hashes << hash.attributes}
+          hashes
+        end
+
         def save creator=$towsta_default_author
           export = self.attributes
           export.delete :author
