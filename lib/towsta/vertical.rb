@@ -93,11 +93,11 @@ module Towsta
 
         def attributes
           horizontal = {:vertical => self.class.to_s}
-          self.class.attributes.each do |attr, val|
-            if Vertical.all.include? val.class || User == val.class
-              horizontal[attr] = val.id
+          self.class.attributes.each do |attr|
+            if Vertical.all.include? eval(attr).class || User == eval(attr).class
+              horizontal[attr] = eval(attr).id
             else
-            horizontal[attr] = eval(attr.to_s).to_s
+              horizontal[attr] = eval(attr.to_s).to_s
             end
           end
           horizontal
