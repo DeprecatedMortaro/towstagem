@@ -37,7 +37,7 @@ module Towsta
     end
 
     def backup
-      if @path
+      if @path != ".json"
         open(@path, "wb"){|file| file.write @json}
         puts "creating a backup in #{@path}"
       end
