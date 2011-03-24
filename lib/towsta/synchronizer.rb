@@ -1,5 +1,6 @@
 require 'net/http'
 require 'json'
+require 'time'
 
 module Towsta
   class Synchronizer
@@ -19,7 +20,7 @@ module Towsta
         return false
       end
       begin
-        Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/export.json").body}
+        Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/#{Time.now.to_i}/export.json").body}
         puts 'Synchronized with towsta...'
         if @json == " "
           puts 'Maybe your secret is wrong...'
