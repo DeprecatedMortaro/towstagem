@@ -136,19 +136,13 @@ module Towsta
       end
 
       def self.to_dt value
-        begin
-          DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time
-        rescue
-          nil
-        end
+        begin; DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time;
+        rescue; nil; end;
       end
       
       def self.to_d value
-        begin
-          DateTime.strptime(value, '%m/%d/%Y %H:%M')
-        rescue
-          nil
-        end
+        begin; DateTime.strptime(value, '%m/%d/%Y %H:%M');
+        rescue; nil; end;
       end
 
   end
