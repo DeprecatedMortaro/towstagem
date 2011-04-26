@@ -74,6 +74,8 @@ module Towsta
           export = self.attributes
           export.delete :author
           export.delete :vertical
+          export.delete :created_at
+          export.delete :updated_at
           id_aux = export.delete(:id)
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
