@@ -129,11 +129,28 @@ module Towsta
         return "@#{attr} = value.to_f;" if kind == 'money'
         return "@#{attr} = value.to_i;" if kind == 'integer'
         return "@#{attr} = value == '1';" if kind == 'boolean'
-        return "@#{attr} = Date.strptime(value, '%m/%d/%Y');" if kind == 'date'
-        return "@#{attr} = DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time;" if kind == 'datetime'
+        return "@#{attr} = Vertical.to_dt(value);" if kind == 'datetime'
+        return "@#{attr} = Vertical.to_d(value);" if kind == 'date'
         return "@#{attr} = User.find value.to_i;" if kind == 'user'
         "@#{attr} = value;"
       end
+
+      def self.to_dt value
+        begin
+          DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time
+        rescue
+          nil
+        end
+      end
+      
+      def self.to_d value
+        begin
+          DateTime.strptime(value, '%m/%d/%Y %H:%M')
+        rescue
+          nil
+        end
+      end
+
   end
 
 end
