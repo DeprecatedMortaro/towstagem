@@ -20,8 +20,8 @@ module Towsta
         args[:slices].each do |attr, kind|
           eval "def #{attr}= value; #{Vertical.parse_set attr, kind}; end;"
           eval "def #{attr}; #{Vertical.parse_get attr, kind}; end;"
-          eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr} == value}; nil; end;"
-          eval "def self.find_all_by_#{attr} value; found = []; self.all.each {|e| found << e if e.#{attr} == value}; found; end;"
+          eval "def self.find_by_#{attr} value; #{Vertical.parse_find attr, kind}; nil; end;"
+          eval "def self.find_by_#{attr} value; #{Vertical.parse_find_all attr, kind}; nil; end;"
         end
 
         def self.count
@@ -134,7 +134,18 @@ module Towsta
         return "@#{attr} = Vertical.to_dt(value);" if kind == 'datetime'
         return "@#{attr} = Vertical.to_d(value);" if kind == 'date'
         return "@#{attr} = User.find value.to_i;" if kind == 'user'
+        return "@#{attr} = value.split(', ');" if kind == 'list'
         "@#{attr} = value;"
+      end
+
+      def self.parse_find attr, kind
+        return "self.all.each {|e| return e if e.#{attr} == value};" unless kind == 'list'
+        "self.all.each {|e| return e if e.#{attr}.include?};"
+      end
+      
+      def self.parse_find_all attr, kind
+        return "found =[]; self.all.each {|e| found << e if e.#{attr} == value}; found;" unless kind == 'list'
+        "found =[]; self.all.each {|e| found << e if e.#{attr}.include? value}; found;"
       end
 
       def self.to_dt value
