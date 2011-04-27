@@ -21,7 +21,7 @@ module Towsta
           eval "def #{attr}= value; #{Vertical.parse_set attr, kind}; end;"
           eval "def #{attr}; #{Vertical.parse_get attr, kind}; end;"
           eval "def self.find_by_#{attr} value; #{Vertical.parse_find attr, kind}; nil; end;"
-          eval "def self.find_by_#{attr} value; #{Vertical.parse_find_all attr, kind}; nil; end;"
+          eval "def self.find_all_by_#{attr} value; #{Vertical.parse_find_all attr, kind}; nil; end;"
         end
 
         def self.count
