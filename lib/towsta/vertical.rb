@@ -140,12 +140,12 @@ module Towsta
 
       def self.parse_find attr, kind
         return "self.all.each {|e| return e if e.#{attr} == value};" unless kind == 'list'
-        "self.all.each {|e| return e if e.#{attr}.include?};"
+        "self.all.each {|e| return e if e.#{attr}.include?(value)};"
       end
       
       def self.parse_find_all attr, kind
         return "found =[]; self.all.each {|e| found << e if e.#{attr} == value}; found;" unless kind == 'list'
-        "found =[]; self.all.each {|e| found << e if e.#{attr}.include? value}; found;"
+        "found =[]; self.all.each {|e| found << e if e.#{attr}.include?(value)}; found;"
       end
 
       def self.to_dt value
