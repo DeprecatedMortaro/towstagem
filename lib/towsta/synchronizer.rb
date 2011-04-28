@@ -70,7 +70,7 @@ module Towsta
         puts "vertical #{structure[:name]} was created with #{hash[:verticals][i][:horizontals].size} horizontals"
         if hash[:verticals][i][:occurrences].any?
           hash[:verticals][i][:occurrences].each do |occurrence|
-            Vertical.all.last.add_occurrence occurrence
+            eval(Vertical.all.last.add_occurrence occurrence)
           end
         end
       end
