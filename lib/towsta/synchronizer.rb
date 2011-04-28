@@ -68,6 +68,11 @@ module Towsta
         Vertical.all << eval(structure[:name])
         hash[:verticals][i][:horizontals].each {|horizontal| Vertical.all.last.new horizontal}
         puts "vertical #{structure[:name]} was created with #{hash[:verticals][i][:horizontals].size} horizontals"
+        if hash[:verticals][i][:occurrences].any?
+          hash[:verticals][i][:occurrences].each do |occurrence|
+            Vertical.all.last.add_occurrence occurrence
+          end
+        end
       end
       true
     end    

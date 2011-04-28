@@ -114,6 +114,10 @@ module Towsta
           nil
         end
 
+        def add_occurrence occurrence
+          puts "adding occurrence =D"
+        end
+
       end
       klass.all = []
       klass.attributes = args[:slices].keys
