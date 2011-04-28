@@ -120,6 +120,7 @@ module Towsta
           str += occurrence[:items].inspect
           str += ";end;end;"
           eval str
+          puts str
         end
 
       end
