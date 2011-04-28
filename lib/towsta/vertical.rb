@@ -114,7 +114,7 @@ module Towsta
           nil
         end
 
-        def add_occurrence occurrence
+        def self.add_occurrence occurrence
           puts "adding occurrence =D"
         end
 
