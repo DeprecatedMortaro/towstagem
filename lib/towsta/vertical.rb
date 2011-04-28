@@ -119,6 +119,7 @@ module Towsta
           str += "def self.occurrences_for_#{occurrence[:name].downcase};"
           str += occurrence[:items].inspect
           str += ";end;end;"
+          puts str
           str
         end
 
