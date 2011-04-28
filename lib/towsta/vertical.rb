@@ -116,7 +116,7 @@ module Towsta
 
         def self.add_occurrence occurrence
           str = "class #{self.to_s};"
-          str += "def self.occurrences_for_#{occurrence[:name]};"
+          str += "def self.occurrences_for_#{occurrence[:name].downcase};"
           str += occurrence[:items].inspect
           str += ";end;end;"
           eval str
