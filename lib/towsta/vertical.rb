@@ -115,7 +115,7 @@ module Towsta
         end
 
         def self.add_occurrence occurrence
-          self.define_method "self.occurrences_for_#{occurrence[:name].downcase}" do
+          self.send(:define_method, "self.occurrences_for_#{occurrence[:name].downcase}") do
             eval occurrence[:items].inspect
           end
         end
