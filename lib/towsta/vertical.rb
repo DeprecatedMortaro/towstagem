@@ -115,7 +115,11 @@ module Towsta
         end
 
         def self.add_occurrence occurrence
-          puts "adding occurrence =D"
+          str = "class #{self.to_s};"
+          str += "def occurrences_for_#{ocurrence[:name]};"
+          str += occurrence[:items].inspect
+          str += ";end;end;"
+          eval str
         end
 
       end
