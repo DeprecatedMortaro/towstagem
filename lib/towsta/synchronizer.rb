@@ -10,7 +10,7 @@ module Towsta
     def initialize args
       @secret = args[:secret]
       @path = "#{args[:path]}.json"
-      #@params = args[:params]
+      @params = args[:params]
       synchronize ? backup : find_old
       puts just_do_it ? 'Ready to Towst!' : 'Unable to keep Towsting!'
     end
