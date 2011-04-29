@@ -5,11 +5,12 @@ require 'time'
 module Towsta
   class Synchronizer
 
-    attr_accessor :secret, :path, :json
+    attr_accessor :secret, :path, :json, :params
 
     def initialize args
       @secret = args[:secret]
       @path = "#{args[:path]}.json"
+      @params = args[:params]
       synchronize ? backup : find_old
       puts just_do_it ? 'Ready to Towst!' : 'Unable to keep Towsting!'
     end
@@ -20,7 +21,9 @@ module Towsta
         return false
       end
       begin
-        Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/#{Time.now.to_i}/export.json").body}
+        uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
+        uri += CGI::escape @params if @params
+        Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
         puts 'Synchronized with towsta...'
         if @json == " "
           puts 'Maybe your secret is wrong...'
