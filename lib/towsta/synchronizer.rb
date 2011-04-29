@@ -22,7 +22,7 @@ module Towsta
       end
       begin
         uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
-        uri += CGI::escape @params if @params
+        uri += "?query=#{CGI::escape(@params.to_json)}" if @params
         Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
         puts 'Synchronized with towsta...'
         if @json == " "
