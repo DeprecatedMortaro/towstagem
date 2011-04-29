@@ -10,7 +10,7 @@ module Towsta
     def initialize args
       @secret = args[:secret]
       @path = "#{args[:path]}.json"
-      @params = args[:params]
+      #@params = args[:params]
       synchronize ? backup : find_old
       puts just_do_it ? 'Ready to Towst!' : 'Unable to keep Towsting!'
     end
@@ -22,7 +22,7 @@ module Towsta
       end
       begin
         uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
-        puts "?query=#{CGI::escape(@params.to_json)}" #if @params
+        #puts "?query=#{CGI::escape(@params.to_json)}" #if @params
         Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
         puts 'Synchronized with towsta...'
         if @json == " "
