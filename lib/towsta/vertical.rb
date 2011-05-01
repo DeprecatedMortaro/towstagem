@@ -133,7 +133,7 @@ module Towsta
       end
 
       def self.parse_set attr, kind
-        return "@#{attr} = \"\#{value.to_s}\"" if ['main','text','formated','password','link'].include? kind
+        return "@#{attr} = CGI::unescape(\"\#{value.to_s}\")" if ['main','text','formated','password','link'].include? kind
         return "@#{attr} = value.to_f;" if kind == 'money'
         return "@#{attr} = value.to_i;" if kind == 'integer'
         return "@#{attr} = value == '1';" if kind == 'boolean'
@@ -155,13 +155,21 @@ module Towsta
       end
 
       def self.to_dt value
-        begin; DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time;
-        rescue; nil; end;
+        if value.class == String
+          begin; DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time;
+          rescue; nil; end;
+        else
+          value
+        end
       end
       
       def self.to_d value
-        begin; DateTime.strptime(value, '%m/%d/%Y %H:%M');
-        rescue; nil; end;
+        if value.class == String
+          begin; DateTime.strptime(value, '%m/%d/%Y %H:%M');
+          rescue; nil; end;
+        else
+          value
+        end
       end
 
   end
