@@ -139,6 +139,7 @@ module Towsta
         return "@#{attr} = value == '1';" if kind == 'boolean'
         return "@#{attr} = Vertical.to_dt(value);" if kind == 'datetime'
         return "@#{attr} = Vertical.to_d(value);" if kind == 'date'
+        return "@#{attr} = Vertical.to_bresson(value);" if kind == 'image'
         return "@#{attr} = User.find value.to_i;" if kind == 'user'
         return "@#{attr} = value.split(', ');" if kind == 'list'
         "@#{attr} = value;"
@@ -157,7 +158,7 @@ module Towsta
       def self.to_dt value
         if value.class == String
           begin; DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time;
-          rescue; nil; end;
+          rescue; nil; end
         else
           value
         end
@@ -166,10 +167,15 @@ module Towsta
       def self.to_d value
         if value.class == String
           begin; DateTime.strptime(value, '%m/%d/%Y %H:%M');
-          rescue; nil; end;
+          rescue; nil; end
         else
           value
         end
+      end
+
+      def self.to_bresson value
+        begin; Bresson::ImageReference.new JSON.parse value[1..-2]
+        rescue; nil; end
       end
 
   end
