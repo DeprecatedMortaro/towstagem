@@ -174,7 +174,7 @@ module Towsta
       end
 
       def self.to_bresson value
-        begin; Bresson::ImageReference.new JSON.parse value[1..-2]
+        begin; Bresson::ImageReference.new JSON.parse(value[1..-2], :symbolize_names => true)
         rescue; nil; end
       end
 
