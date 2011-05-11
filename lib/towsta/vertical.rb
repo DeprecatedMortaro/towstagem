@@ -15,7 +15,7 @@ module Towsta
       klass = Class.new do
 
         class << self
-          attr_accessor :all, :attributes
+          attr_accessor :all, :attributes, :count
         end
 
         args[:slices].each do |attr, kind|
@@ -123,6 +123,7 @@ module Towsta
 
       end
       klass.all = []
+      klass.count = args[:count]
       klass.attributes = args[:slices].keys
       Object.const_set args[:name], klass
     end
