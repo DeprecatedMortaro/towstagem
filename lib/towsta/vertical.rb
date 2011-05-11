@@ -98,9 +98,9 @@ module Towsta
             if foreings.include? eval(attr.to_s).class
               horizontal[attr] = eval(attr.to_s).id
             elsif eval(attr.to_s).class == Time
-              horizontal[attr] = eval(attr.to_s).strptime(value, '%m/%d/%Y %H:%M')
+              horizontal[attr] = eval(attr.to_s).strptime('%m/%d/%Y %H:%M')
             elsif eval(attr.to_s).class == DateTime
-              horizontal[attr] = eval(attr.to_s).strptime(value, '%m/%d/%Y')
+              horizontal[attr] = eval(attr.to_s).strptime('%m/%d/%Y')
             else
               horizontal[attr] = eval(attr.to_s).to_s
             end
