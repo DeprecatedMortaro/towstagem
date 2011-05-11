@@ -25,10 +25,6 @@ module Towsta
           eval "def self.find_all_by_#{attr} value; #{Vertical.parse_find_all attr, kind}; end;"
         end
 
-        def self.count
-          self.all.size
-        end
-
         def self.first
           self.all.first
         end
