@@ -74,6 +74,7 @@ module Towsta
           export.delete :created_at
           export.delete :updated_at
           id_aux = export.delete(:id)
+          id_aux ? id_aux : '0'
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
           response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
@@ -86,8 +87,8 @@ module Towsta
           self.all[rand(position)]
         end
 
-        def self.create args
-          self.new(args.merge(:id => nil)).save
+        def self.create args, creator=$towsta_default_author
+          self.new(args.merge(:id => nil)).save creator
         end
 
         def attributes
@@ -96,6 +97,10 @@ module Towsta
             foreings = Vertical.all + [User]
             if foreings.include? eval(attr.to_s).class
               horizontal[attr] = eval(attr.to_s).id
+            elsif eval(attr.to_s).class == Time
+              horizontal[attr] = eval(attr.to_s).strptime(value, '%m/%d/%Y %H:%M')
+            elsif eval(attr.to_s).class == DateTime
+              horizontal[attr] = eval(attr.to_s).strptime(value, '%m/%d/%Y')
             else
               horizontal[attr] = eval(attr.to_s).to_s
             end
@@ -164,7 +169,7 @@ module Towsta
       
       def self.to_d value
         if value.class == String
-          begin; DateTime.strptime(value, '%m/%d/%Y %H:%M');
+          begin; DateTime.strptime(value, '%m/%d/%Y');
           rescue; nil; end
         else
           value
