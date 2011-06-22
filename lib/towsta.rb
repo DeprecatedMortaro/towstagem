@@ -6,6 +6,7 @@ module Towsta
 end
 
 def sync_with_towsta params=nil
+  params ||= {} if $towsta_sync
   $towsta_sync ||= {}
   params = $towsta_sync.merge(params) if params
   Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
