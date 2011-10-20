@@ -145,6 +145,7 @@ module Towsta
         return "@#{attr} = Vertical.to_bresson(value);" if kind == 'image'
         return "@#{attr} = User.find value.to_i;" if kind == 'user'
         return "@#{attr} = value.split(', ');" if kind == 'list'
+        return "@#{attr} = Vertical.to_gallery(value.to_s);" if kind == 'gallery'
         "@#{attr} = value;"
       end
 
@@ -152,10 +153,25 @@ module Towsta
         return "self.all.each {|e| return e if e.#{attr} == value};" unless kind == 'list'
         "self.all.each {|e| return e if e.#{attr}.include?(value)};"
       end
-      
+
       def self.parse_find_all attr, kind
         return "found =[]; self.all.each {|e| found << e if e.#{attr} == value}; found;" unless kind == 'list'
         "found =[]; self.all.each {|e| found << e if e.#{attr}.include?(value)}; found;"
+      end
+
+      def self.to_gallery value
+        if value.class == String
+          begin;
+            gal = JSON.parse(value, :symbolize_names => true)
+            arr = []
+            gal.each do |g|
+              arr << Bresson::ImageReference.new(g)
+            end
+            return arr
+          rescue; nil; end
+        else
+          value
+        end
       end
 
       def self.to_dt value
@@ -166,7 +182,7 @@ module Towsta
           value
         end
       end
-      
+
       def self.to_d value
         if value.class == String
           begin; DateTime.strptime(value, '%m/%d/%Y');
