@@ -4,7 +4,7 @@ set :cache, Dalli::Client.new
 class Memory
   def recover params
     params.each do |key, value|
-      puts "#{key} => #{value}"
+      cache_string =  "#{key} => #{value}"
     end
     Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
   end

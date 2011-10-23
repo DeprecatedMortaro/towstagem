@@ -10,6 +10,6 @@ def sync_with_towsta params=nil
   params ||= {} if $towsta_sync
   $towsta_sync ||= {}
   params = $towsta_sync.merge(params) if params
-  return Memory.recover params if $towsta_cache
+  return Towsta::Memory.recover params if $towsta_cache
   Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
 end
