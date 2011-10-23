@@ -3,7 +3,7 @@ set :cache, Dalli::Client.new
 
 module Towsta
   class Memory
-    def recover params
+    def self.recover params
       params.each do |key, value|
         cache_string =  "#{key} => #{value}"
       end
