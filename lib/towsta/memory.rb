@@ -19,13 +19,13 @@ module Towsta
       end
     end
 
+    def self.flush
+      settings.cache.flush
+    end
+
     def self.md5 params
       digest = Digest::MD5.hexdigest(params.inspect.to_s)
     end
 
   end
-end
-
-get "/flush/#{$towsta_secret}" do
-  settings.cache.flush
 end

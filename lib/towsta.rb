@@ -13,3 +13,7 @@ def sync_with_towsta params=nil
   return Towsta::Memory.recover params if $towsta_cache
   Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
 end
+
+def clear_sync
+  Towsta::Memory.flush
+end
