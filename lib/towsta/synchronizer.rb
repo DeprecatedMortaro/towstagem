@@ -18,7 +18,7 @@ module Towsta
     end
 
     def synchronize
-      unless @cache.blank?
+      unless @cache.nil?
         @json = @cache
         return true
       end
