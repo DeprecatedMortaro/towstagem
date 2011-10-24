@@ -24,7 +24,7 @@ module Towsta
     end
 
     def self.md5 key, value
-      digest = Digest::MD5.hexdigest(key+value)
+      digest = Digest::MD5.hexdigest(key.to_s+value.to_s)
     end
 
   end
