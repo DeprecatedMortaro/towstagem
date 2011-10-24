@@ -6,17 +6,22 @@ require 'time'
 module Towsta
   class Synchronizer
 
-    attr_accessor :secret, :path, :json, :params
+    attr_accessor :secret, :path, :json, :params, :cache
 
     def initialize args
       @secret = args[:secret]
       @path = "#{args[:path]}.json"
       @params = args[:params]
+      @cache = args[:cache]
       synchronize ? backup : find_old
       puts just_do_it ? 'Ready to Towst!' : 'Unable to keep Towsting!'
     end
 
     def synchronize
+      unless @cache.blank?
+        @json = @cache
+        return true
+      end
       unless @secret
         puts 'you cant synchronize without a secret...'
         return false
@@ -79,7 +84,7 @@ module Towsta
         end
       end
       true
-    end    
+    end
 
     def self.callback json
       json = JSON.parse json, :symbolize_names => true
