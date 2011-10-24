@@ -6,16 +6,21 @@ module Towsta
   class Memory
 
     def self.recover params
-      puts 'USANDO CACHEEEEEEEEEEEEEEEEEEEEEEEEEE'
       if settings.cache.get(params.to_s)
-        settings.cache.set(params.inspect.to_s,true)
+        puts 'USANDO CACHEEEEEEEEEEEEEEEEEEEEEEEEEE'
         params.each do |key, value|
           cache_string =  "#{key} => #{value}"
           puts cache_string
           Object.const_set key.to_s, settings.cache.get(cache_string)
         end
       else
+        puts 'CRIANDO CACHEEEEEEEEEEEEEEEEE'
         Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
+        settings.cache.set(params.inspect.to_s,true)
+        params.each do |key, value|
+          cache_string =  "#{key} => #{value}"
+          settings.cache.set(cache_string,eval(key.to_s))
+        end
       end
     end
 
