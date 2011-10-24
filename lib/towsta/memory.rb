@@ -2,20 +2,21 @@ require 'dalli'
 set :cache, Dalli::Client.new
 
 module Towsta
+
   class Memory
+
     def self.recover params
-      params.each do |key, value|
-        cache_string =  "#{key} => #{value}"
+      if settings.cache.get(params.to_s)
+        settings.cache.set(params.inspect.to_s,true)
+        params.each do |key, value|
+          cache_string =  "#{key} => #{value}"
+          puts cache_string
+          Object.const_set key.to_s, settings.cache.get(cache_string)
+        end
+      else
+        Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
       end
-      Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
     end
+
   end
 end
-
-#get '/' do
-#  if settings.cache.get('teste')
-#    haml settings.cache.get('teste')
-#  else
-#    haml Teste.first.id
-#  end
-#end
