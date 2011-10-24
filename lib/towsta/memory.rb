@@ -8,7 +8,7 @@ module Towsta
   class Memory
 
     def self.recover params
-      if false #settings.cache.get(params.to_s)
+      if true #settings.cache.get(params.to_s)
         puts 'USANDO CACHEEEEEEEEEEEEEEEEEEEEEEEEEE'
         params.each do |key, value|
           Object.const_set key.to_s, settings.cache.get(Memory.md5(key,value))
