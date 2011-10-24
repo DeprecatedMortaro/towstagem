@@ -6,6 +6,7 @@ module Towsta
   class Memory
 
     def self.recover params
+      puts 'USANDO CACHEEEEEEEEEEEEEEEEEEEEEEEEEE'
       if settings.cache.get(params.to_s)
         settings.cache.set(params.inspect.to_s,true)
         params.each do |key, value|
