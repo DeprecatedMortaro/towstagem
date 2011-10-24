@@ -25,3 +25,7 @@ module Towsta
 
   end
 end
+
+get "/flush/$towsta_secret" do
+  settings.cache.flush
+end
