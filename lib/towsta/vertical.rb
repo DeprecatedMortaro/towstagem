@@ -23,6 +23,7 @@ module Towsta
           eval "def #{attr}; #{Vertical.parse_get attr, kind}; end;"
           eval "def self.find_by_#{attr} value; #{Vertical.parse_find attr, kind}; nil; end;"
           eval "def self.find_all_by_#{attr} value; #{Vertical.parse_find_all attr, kind}; end;"
+          eval "def option_for_#{attr} value; return {value: value, selected: 'selected'} if value == #{attr}; {value: value}; end"
         end
 
         def self.first
