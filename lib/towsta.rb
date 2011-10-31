@@ -12,6 +12,9 @@ def sync_with_towsta params=nil
   params = $towsta_sync.merge(params) if params
   return Towsta::Memory.recover params if $towsta_cache
   Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
+  begin
+    Dir["./models/*.rb"].each {|file| load file }
+  rescue; end;
 end
 
 def clear_sync
