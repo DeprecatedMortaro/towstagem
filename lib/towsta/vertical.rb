@@ -43,8 +43,9 @@ module Towsta
           self.class.all << self
         end
 
-        def update args
+        def update args, author=$towsta_default_author
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
+          self.save author
         end
 
         def self.update args
