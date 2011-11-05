@@ -7,10 +7,7 @@ if action == 'new'
   configru += "run Sinatra::Application"
   File.open("#{project}/config.ru", 'w') {|f| f.write(configru) }
   gemfile = "source :rubygems \n"
-  gemfile += "gem 'towsta'\n\n"
-  gemfile += "group :development do\n"
-  gemfile += "  gem 'shotgun'\n"
-  gemfile += 'end'
+  gemfile += "gem 'towsta'"
   File.open("#{project}/Gemfile", 'w') {|f| f.write(gemfile) }
   apprb = "#coding: utf-8 \n"
   apprb += "require 'towsta'\n\n"
@@ -25,13 +22,13 @@ if action == 'new'
   layout = "!!!\n"
   layout += "%html\n"
   layout += "  %head\n"
-  layout += "    partial :head\n"
+  layout += "    = partial :head\n"
   layout += "  %body\n"
   layout += "    #top\n"
   layout += "      .wrapper\n"
   layout += "    #middle\n"
   layout += "      .wrapper\n"
-  layout += "        = yield"
+  layout += "        = yield\n"
   layout += "    #bottom\n"
   layout += "      .wrapper\n"
   File.open("#{project}/views/layout.haml", 'w') {|f| f.write(layout)}
@@ -63,4 +60,10 @@ if action == 'new'
   js += "});"
   File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
   Dir.mkdir "#{project}/public/images"
+elsif action == 'server'
+elsif action == 'help'
+  puts 'new {projectname} {optional: secret}           to generate a new project'
+  puts 'server {optional: port}                        to run the application'
+else
+  puts 'Comand not found, try running "towsta help"'
 end
