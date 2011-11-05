@@ -1,3 +1,2 @@
 #!/usr/bin/env ruby
-require 'ftools'
-File.makedirs ARGV.first
+Dir.mkdir ARGV.first
