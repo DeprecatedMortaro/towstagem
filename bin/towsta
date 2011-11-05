@@ -12,13 +12,20 @@ if action == 'new'
   gemfile += "  gem 'shotgun'\n"
   gemfile += 'end'
   File.open("#{project}/Gemfile", 'w') {|f| f.write(gemfile) }
-  apprb = "coding: utf-8 \n"
-  apprb += "require 'towsta'\n"
+  apprb = "#coding: utf-8 \n"
+  apprb += "require 'towsta'\n\n"
   apprb += "$towsta_secret = '#{ARGV[2]}'\n"
   apprb += "$towsta_cache = true\n\n"
   apprb += "get '/' do\n"
   apprb += "  sync_with_towsta\n"
-  apprb += "  Hello Towsta!\n"
+  apprb += "  haml 'Hello Towsta!'\n"
   apprb += "end\n"
   File.open("#{project}/app.rb", 'w') {|f| f.write(apprb) }
+  Dir.mkdir 'views'
+  Dir.mkdir 'models'
+  Dir.mkdir 'public'
+  Dir.mkdir 'views/stylesheets'
+  Dir.mkdir 'views/partials'
+  Dir.mkdir 'public/js'
+  Dir.mkdir 'public/images'
 end
