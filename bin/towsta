@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+action = ARGV.first
+if action == 'new'
+  project = ARGV[1]
+  Dir.mkdir project
+  configru = "require './app'\n"
+  configru += "run Sinatra::Application"
+  File.open("#{project}/config.ru", 'w') {|f| f.write(configru) }
+  gemfile = "source :rubygems \n"
+  gemfile += "gem 'towsta'\n\n"
+  gemfile += "group :development do\n"
+  gemfile += "  gem 'shotgun'\n"
+  gemfile += 'end'
+  File.open("#{project}/Gemfile", 'w') {|f| f.write(gemfile) }
+  apprb = "coding: utf-8 \n"
+  apprb += "require 'towsta'\n"
+  apprb += "$towsta_secret = '#{ARGV[2]}'\n"
+  apprb += "$towsta_cache = true\n\n"
+  apprb += "get '/' do\n"
+  apprb += "  sync_with_towsta\n"
+  apprb += "  Hello Towsta!\n"
+  apprb += "end\n"
+  File.open("#{project}/app.rb", 'w') {|f| f.write(apprb) }
+end
