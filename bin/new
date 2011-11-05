@@ -1,2 +1,6 @@
 #!/usr/bin/env ruby
-Dir.mkdir ARGV.first
+project = ARGV.first
+Dir.mkdir project
+configru = "require 'app'\n
+configru += "run Sinatra::Application"
+File.open("#{project}/config.ru", 'w') {|f| f.write(configru) }
