@@ -4,9 +4,9 @@ Dir.mkdir project
 configru = "require './app'\n"
 configru += "run Sinatra::Application"
 File.open("#{project}/config.ru", 'w') {|f| f.write(configru) }
-gemfile = 'source :rubygems\n'
+gemfile = 'source :rubygems \n'
 gemfile += "gem 'towsta'\n\n"
 gemfile += "group :development do\n"
-gemfile += "\tgem 'shotgun'"
+gemfile += "  gem 'shotgun'\n"
 gemfile += 'end'
 File.open("#{project}/Gemfile", 'w') {|f| f.write(gemfile) }
