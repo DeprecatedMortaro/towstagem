@@ -61,7 +61,7 @@ if action == 'new'
   File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
   Dir.mkdir "#{project}/public/images"
 elsif action == 'server'
-  port = ARGV[1].blank? ? '6969' : ARGV[1]
+  port = ARGV[1].nil? ? '6969' : ARGV[1]
   system "shotgun -I . config.ru -p #{port}"
   puts "Towsta server runnig at http://localhost:6969/"
 elsif action == 'console'
