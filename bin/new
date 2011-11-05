@@ -9,3 +9,4 @@ gemfile += "gem 'towsta'\n\n"
 gemfile += "group :development do\n"
 gemfile += "\tgem 'shotgun'"
 gemfile += 'end'
+File.open("#{project}/Gemfile", 'w') {|f| f.write(gemfile) }
