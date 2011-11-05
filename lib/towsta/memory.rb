@@ -1,6 +1,3 @@
-require 'dalli'
-require 'digest/md5'
-
 set :cache, Dalli::Client.new
 
 module Towsta

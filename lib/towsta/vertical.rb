@@ -1,7 +1,3 @@
-require 'date'
-require 'time'
-require 'bresson'
-
 module Towsta
 
   class Vertical

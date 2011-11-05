@@ -1,8 +1,3 @@
-require 'net/http'
-require 'cgi'
-require 'json'
-require 'time'
-
 module Towsta
   class Synchronizer
 

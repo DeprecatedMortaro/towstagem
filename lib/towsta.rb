@@ -1,7 +1,18 @@
-#require File.expand_path('../towsta/tree', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)
 require File.expand_path('../towsta/synchronizer', __FILE__)
 require File.expand_path('../towsta/memory', __FILE__)
+
+require 'dalli'
+require 'digest/md5'
+require 'net/http'
+require 'cgi'
+require 'json'
+require 'time'
+require 'date'
+require 'time'
+require 'bresson'
+require 'sinatra'
+require 'compass'
 
 module Towsta
 end
