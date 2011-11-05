@@ -1,2 +1,2 @@
 #!/usr/bin/env ruby
-puts $1
+puts ARGV.first
