@@ -38,6 +38,16 @@ if action == 'new'
   css += "  :width 100%"
   File.open("#{project}/views/stylesheets/#{project}.sass", 'w') {|f| f.write(css)}
   Dir.mkdir "#{project}/views/partials"
+  head = "%title #{project}\n"
+  head += "%meta{'http-equiv' => 'Content-Type', :content => 'text/html', :charset => 'utf-8'}\n"
+  head += "%link{:rel => 'stylesheet', :type =>'text/css', :href => '/stylesheets/#{project}.css'}\n"
+  head += "%link{:rel => 'shortcut icon', :type=> 'image/x-icon', :href => '/images/favicon.png'}\n"
+  head += "%script{:src => '/js/jquery.js'}\n"
+  head += "%script{:src => '/js/#{project}.js'}"
+  File.open("#{project}/views/partials/_head.haml", 'w') {|f| f.write(head)}
   Dir.mkdir "#{project}/public/js"
+  js = "$(function() {\n\n"
+  js += "});"
+  File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
   Dir.mkdir "#{project}/public/images"
 end
