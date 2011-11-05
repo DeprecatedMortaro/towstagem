@@ -61,9 +61,12 @@ if action == 'new'
   File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
   Dir.mkdir "#{project}/public/images"
 elsif action == 'server'
+elsif action == 'console'
+  sh 'irb -r ./app.rb'
 elsif action == 'help'
-  puts 'new {projectname} {optional: secret}           to generate a new project'
-  puts 'server {optional: port}                        to run the application'
+  puts 'towsta new {projectname} {optional: secret}           to generate a new project'
+  puts 'towsta server {optional: port}                        to run the application'
+  puts 'towsta console                                        to run the application console'
 else
   puts 'Comand not found, try running "towsta help"'
 end
