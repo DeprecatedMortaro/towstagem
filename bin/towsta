@@ -18,13 +18,25 @@ if action == 'new'
   apprb += "$towsta_cache = true\n\n"
   apprb += "get '/' do\n"
   apprb += "  sync_with_towsta\n"
-  apprb += "  haml 'Hello Towsta!'\n"
+  apprb += "  haml :index\n"
   apprb += "end\n"
   File.open("#{project}/app.rb", 'w') {|f| f.write(apprb) }
   Dir.mkdir "#{project}/views"
+  index = '%h1 Hello Towsta'
+  File.open("#{project}/views/index.haml", 'w') {|f| f.write(index)}
   Dir.mkdir "#{project}/models"
   Dir.mkdir "#{project}/public"
   Dir.mkdir "#{project}/views/stylesheets"
+  css = "@import compass/reset\n"
+  css += "@import compass/css3\n\n"
+  css += "$wrapper: 940px\n\n"
+  css += ".wrapper"
+  css += "  :width $wrapper"
+  css += "  :margin 0 auto"
+  css += "#top, #middle, #bottom"
+  css += "  :float left"
+  css += "  :width 100%"
+  File.open("#{project}/views/stylesheets/#{project}.sass", 'w') {|f| f.write(css)}
   Dir.mkdir "#{project}/views/partials"
   Dir.mkdir "#{project}/public/js"
   Dir.mkdir "#{project}/public/images"
