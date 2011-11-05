@@ -62,8 +62,7 @@ if action == 'new'
   Dir.mkdir "#{project}/public/images"
 elsif action == 'server'
   port = ARGV[1].nil? ? '6969' : ARGV[1]
-  system "shotgun -I . config.ru -p #{port}"
-  puts "Towsta server runnig at http://localhost:6969/"
+  system "shotgun -I config.ru -p #{port}"
 elsif action == 'console'
   system 'irb -r ./app.rb'
   system 'sync_with_towsta'
