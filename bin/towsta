@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'net/http'
 action = ARGV.first
 if action == 'new'
   project = ARGV[1]
@@ -60,7 +61,10 @@ if action == 'new'
   js = "$(function() {\n\n"
   js += "});"
   File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
+  Net::HTTP.start("code.jquery.com"){|http| jquery = http.get('/jquery.min.js').body}
+  File.open("#{project}/public/js/jquery.js", 'w') {|f| f.write(jquery)}
   Dir.mkdir "#{project}/public/images"
+  puts "#{project} is ready to towst!"
 elsif action == 'server'
   port = ARGV[1].nil? ? '6969' : ARGV[1]
   system "shotgun -I config.ru -p #{port}"
