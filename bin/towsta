@@ -70,7 +70,6 @@ elsif action == 'server'
   system "shotgun -I config.ru -p #{port}"
 elsif action == 'console'
   system 'irb -r ./app.rb'
-  system 'sync_with_towsta'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
   puts 'towsta server {optional: port}                        to run the application'
