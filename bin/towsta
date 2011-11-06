@@ -13,7 +13,7 @@ if action == 'new'
   apprb += "require 'sinatra'\n"
   apprb += "require 'towsta'\n\n"
   apprb += "$towsta_secret = '#{ARGV[2]}'\n"
-  apprb += "$towsta_cache = true\n\n"
+  apprb += "# $towsta_cache = true\n\n"
   apprb += "get '/' do\n"
   apprb += "  sync_with_towsta\n"
   apprb += "  haml :index\n"
