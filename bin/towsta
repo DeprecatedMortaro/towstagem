@@ -61,8 +61,8 @@ if action == 'new'
   js = "$(function() {\n\n"
   js += "});"
   File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
-  Net::HTTP.start("code.jquery.com"){|http| jquery = http.get('/jquery.min.js').body}
-  File.open("#{project}/public/js/jquery.js", 'w') {|f| f.write(jquery)}
+  Net::HTTP.start("code.jquery.com"){|http| @jquery = http.get('/jquery.min.js').body}
+  File.open("#{project}/public/js/jquery.js", 'w') {|f| f.write(@jquery)}
   Dir.mkdir "#{project}/public/images"
   puts "#{project} is ready to towst!"
 elsif action == 'server'
