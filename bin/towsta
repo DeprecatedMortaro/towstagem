@@ -51,11 +51,11 @@ if action == 'new'
   File.open("#{project}/views/stylesheets/#{project}.sass", 'w') {|f| f.write(css)}
   Dir.mkdir "#{project}/views/partials"
   head = "%title #{project}\n"
-  head += "%meta{'http-equiv' => 'Content-Type', :content => 'text/html', :charset => 'utf-8'}\n"
-  head += "%link{:rel => 'stylesheet', :type =>'text/css', :href => '/stylesheets/#{project}.css'}\n"
-  head += "%link{:rel => 'shortcut icon', :type=> 'image/x-icon', :href => '/images/favicon.png'}\n"
-  head += "%script{:src => '/js/jquery.js'}\n"
-  head += "%script{:src => '/js/#{project}.js'}"
+  head += "%meta{'http-equiv': 'Content-Type', content: 'text/html', charset: 'utf-8'}\n"
+  head += "%link{rel: 'stylesheet', type: 'text/css', href: '/stylesheets/#{project}.css'}\n"
+  head += "%link{rel: 'shortcut icon', type: 'image/x-icon', href: '/images/favicon.png'}\n"
+  head += "%script{src: '/js/jquery.js'}\n"
+  head += "%script{src: '/js/#{project}.js'}"
   File.open("#{project}/views/partials/_head.haml", 'w') {|f| f.write(head)}
   Dir.mkdir "#{project}/public/js"
   js = "$(function() {\n\n"
@@ -66,13 +66,13 @@ if action == 'new'
   Dir.mkdir "#{project}/public/images"
   puts "#{project} is ready to towst!"
 elsif action == 'server'
-  port = ARGV[1].nil? ? '6969' : ARGV[1]
+  port = ARGV[1].nil? ? '6937' : ARGV[1]
   system "shotgun -I config.ru -p #{port}"
 elsif action == 'console'
   system 'irb -r ./app.rb'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
-  puts 'towsta server {optional: port}                        to run the application'
+  puts 'towsta server {optional: port}                        to run the application server'
   puts 'towsta console                                        to run the application console'
 else
   puts 'Comand not found, try running "towsta help"'
