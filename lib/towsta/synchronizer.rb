@@ -4,6 +4,7 @@ module Towsta
     attr_accessor :secret, :path, :json, :params, :cache
 
     def initialize args
+      Vertical.all = []
       @secret = args[:secret]
       @path = "#{args[:path]}.json"
       @params = args[:params]
