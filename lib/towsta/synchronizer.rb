@@ -69,6 +69,9 @@ module Towsta
       Vertical.create :name => 'User', :slices => {:id => 'integer', :nick => 'string', :email => 'string'}
       hash[:users].each {|user| User.new user}
       hash[:structures].each_with_index do |structure, i|
+        begin
+          Object.send(:remove_const, structure[:name].to_sym)
+        rescue;nil;end
         Vertical.create structure
         Vertical.all << eval(structure[:name])
         hash[:verticals][i][:horizontals].each {|horizontal| Vertical.all.last.new horizontal}
