@@ -66,6 +66,9 @@ module Towsta
         puts 'Something went wrong tryng to parse JSON.'
         return false
       end
+      begin
+        Object.send(:remove_const, :User)
+      rescue;nil;end
       Vertical.create :name => 'User', :slices => {:id => 'integer', :nick => 'string', :email => 'string'}
       hash[:users].each {|user| User.new user}
       hash[:structures].each_with_index do |structure, i|
