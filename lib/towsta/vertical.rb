@@ -66,6 +66,7 @@ module Towsta
         end
 
         def save creator=$towsta_default_author
+          creator = author.email if author
           export = self.attributes
           export.delete :author
           export.delete :vertical
@@ -100,6 +101,10 @@ module Towsta
               horizontal[attr] = eval(attr.to_s).strftime('%m/%d/%Y %H:%M')
             elsif eval(attr.to_s).class == DateTime
               horizontal[attr] = eval(attr.to_s).strftime('%m/%d/%Y')
+            elsif eval(attr.to_s).class == TrueClass
+              horizontal[attr] = 1
+            elsif eval(attr.to_s).class == FalseClass
+              horizontal[attr] = 0
             else
               horizontal[attr] = eval(attr.to_s).to_s
             end
