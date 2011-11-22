@@ -10,7 +10,7 @@ module Towsta
       @params = args[:params]
       @cache = args[:cache]
       synchronize ? backup : find_old
-      puts just_do_it ? 'Ready to Towst!' : 'Unable to keep Towsting!'
+      puts just_do_it ? "  Ready to Towst!\n" : "  Unable to keep Towsting!\n"
     end
 
     def synchronize
@@ -19,25 +19,25 @@ module Towsta
         return true
       end
       unless @secret
-        puts 'you cant synchronize without a secret...'
+        puts "\nyou cant synchronize without a secret..."
         return false
       end
       begin
         uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
         uri += "?query=#{CGI::escape(@params.to_json)}" if @params
         Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
-        puts 'Synchronized with towsta...'
+        puts "\nSynchronized with towsta..."
         if @json == " "
-          puts 'Maybe your secret is wrong...'
+          puts '  Maybe your secret is wrong...'
           return false
         elsif @json[0] != "{"
-          puts "something wrong with the server"
+          puts "  something wrong with the server"
           return false
         else
           return true
         end
       rescue
-        puts 'failed to synchronize with towsta...'
+        puts '  failed to synchronize with towsta...'
         return false
       end
     end
@@ -45,16 +45,16 @@ module Towsta
     def backup
       if @path != ".json"
         open(@path, "wb"){|file| file.write @json}
-        puts "creating a backup in #{@path}"
+        puts "\n creating a backup in #{@path}"
       end
     end
 
     def find_old
       unless File.exists? @path
-        puts 'could not find any old version...'
+        puts "\n could not find any old version..."
       else
         @json = IO.read(@path).to_s
-        puts 'assuming newest backup...'
+        puts "\n assuming newest backup..."
       end
     end
 
@@ -63,7 +63,7 @@ module Towsta
       begin
         hash = JSON.parse @json, :symbolize_names => true
       rescue
-        puts 'Something went wrong tryng to parse JSON.'
+        puts '  Something went wrong tryng to parse JSON.'
         return false
       end
       begin
@@ -78,7 +78,7 @@ module Towsta
         Vertical.create structure
         Vertical.all << eval(structure[:name])
         hash[:verticals][i][:horizontals].each {|horizontal| Vertical.all.last.new horizontal}
-        puts "vertical #{structure[:name]} was created with #{hash[:verticals][i][:horizontals].size} horizontals"
+        puts "  vertical #{structure[:name]} was created with #{hash[:verticals][i][:horizontals].size} horizontals"
         if hash[:verticals][i][:occurrences].any?
           hash[:verticals][i][:occurrences].each do |occurrence|
             Vertical.all.last.add_occurrence occurrence
