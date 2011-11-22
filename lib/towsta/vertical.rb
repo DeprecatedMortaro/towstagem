@@ -15,14 +15,8 @@ module Towsta
         end
 
         args[:slices].each do |attr, kind|
-          begin
-            kind_class = kind[0].upcase + kind[1..-1]
-            kind_class = eval("Towsta::Kinds::#{kind_class}Kind").to_s
-          rescue
-            kind_class = "Towsta::Kinds::MainKind"
-          end
           eval "def object_of_#{attr}; @#{attr}; end;"
-          eval "def #{attr}= value; @#{attr} ||= #{kind_class}.new; @#{attr}.set value; end;"
+          eval "def #{attr}= value; @#{attr} ||= #{kind[0].upcase + kind[1..-1]}Kind}.new; @#{attr}.set value; end;"
           eval "def #{attr}; @#{attr}.get; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.object_of_#{attr}.compare value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found =[]; self.all.each {|e| found << e if e.object_of_#{attr}.compare value}; found; end;"
@@ -100,16 +94,8 @@ module Towsta
 
         def attributes
           horizontal = {:vertical => self.class.to_s}
-          self.class.attributes.each {|attr| horizontal[attr] = eval("@#{attr.to_s}").export}
+          self.class.attributes.each {|attr| horizontal[attr] = eval("self.object_of#{attr.to_s}").export}
           horizontal
-        end
-
-        def find_horizontal id
-          Vertical.all.each do |v|
-            horizontal = v.find_by_id id.to_i
-            return horizontal if horizontal
-          end
-          nil
         end
 
         def self.add_occurrence occurrence

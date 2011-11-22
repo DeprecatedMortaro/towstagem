@@ -69,7 +69,7 @@ module Towsta
       begin
         Object.send(:remove_const, :User)
       rescue;nil;end
-      Vertical.create :name => 'User', :slices => {:id => 'integer', :nick => 'string', :email => 'string'}
+      Vertical.create :name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}
       hash[:users].each {|user| User.new user}
       hash[:structures].each_with_index do |structure, i|
         begin
@@ -88,16 +88,16 @@ module Towsta
       true
     end
 
-    def self.callback json
-      json = JSON.parse json, :symbolize_names => true
-      return eval(json[:vertical]).new json[:attributes] if json[:action] == 'create'
-      return eval(json[:vertical]).update json[:attributes] if json[:action] == 'update'
-      eval(json[:vertical]).destroy json[:attributes][:id]
-    end
+    #def self.callback json
+    #  json = JSON.parse json, :symbolize_names => true
+    #  return eval(json[:vertical]).new json[:attributes] if json[:action] == 'create'
+    #  return eval(json[:vertical]).update json[:attributes] if json[:action] == 'update'
+    #  eval(json[:vertical]).destroy json[:attributes][:id]
+    #end
 
-    def authenticate code
-      JSON.parse Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/#{code}.json").body}, :symbolize_names => true
-    end
+    #def authenticate code
+    #  JSON.parse Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/#{code}.json").body}, :symbolize_names => true
+    #end
 
   end
 
