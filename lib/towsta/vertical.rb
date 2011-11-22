@@ -16,7 +16,7 @@ module Towsta
 
         args[:slices].each do |attr, kind|
           eval "def #{attr}= value; @#{attr}= Towsta::Kinds::#{kind[0].upcase + kind[1..-1]}Kind.new value; end;"
-          eval "def #{attr}; @#{att}.get; end;"
+          eval "def #{attr}; @#{attr}.get; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr}.compare value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found =[]; self.all.each {|e| found << e if e.#{attr}.compare value}; found; end;"
           eval "def option_for_#{attr} value; return {value: value, selected: 'selected'} if value == #{attr}; {value: value}; end"
@@ -93,24 +93,7 @@ module Towsta
 
         def attributes
           horizontal = {:vertical => self.class.to_s}
-          self.class.attributes.each do |attr|
-            horizontal[attr] = eval("@#{attr.to_s}").export
-
-            #foreings = Vertical.all + [User]
-            #if foreings.include? eval(attr.to_s).class
-            #  horizontal[attr] = eval(attr.to_s).id
-            #elsif eval(attr.to_s).class == Time
-            #  horizontal[attr] = eval(attr.to_s).strftime('%m/%d/%Y %H:%M')
-            #elsif eval(attr.to_s).class == DateTime
-            #  horizontal[attr] = eval(attr.to_s).strftime('%m/%d/%Y')
-            #elsif eval(attr.to_s).class == TrueClass
-            #  horizontal[attr] = 1
-            #elsif eval(attr.to_s).class == FalseClass
-            #  horizontal[attr] = 0
-            #else
-            #  horizontal[attr] = eval(attr.to_s).to_s
-            #end
-          end
+          self.class.attributes.each {|attr| horizontal[attr] = eval("@#{attr.to_s}").export}
           horizontal
         end
 
@@ -134,74 +117,6 @@ module Towsta
       klass.attributes = args[:slices].keys
       Object.const_set args[:name], klass
     end
-
-    private
-      #def self.parse_get attr, kind
-      #  return "@#{attr}.class == String ? self.find_horizontal(@#{attr}) : @#{attr}" if kind == 'vertical'
-      #  "@#{attr}"
-      #end
-
-      #def self.parse_set attr, kind
-      #  return "@#{attr} = \"\#{value.to_s}\"" if ['main','text','formated','password','link'].include? kind
-      #  return "@#{attr} = value.to_f;" if kind == 'money'
-      #  return "@#{attr} = value.to_i;" if kind == 'integer'
-      #  return "@#{attr} = value == '1';" if kind == 'boolean'
-      #  return "@#{attr} = Vertical.to_dt(value);" if kind == 'datetime'
-      #  return "@#{attr} = Vertical.to_d(value);" if kind == 'date'
-      #  return "@#{attr} = Vertical.to_bresson(value);" if kind == 'image'
-      #  return "@#{attr} = User.find value.to_i;" if kind == 'user'
-      #  return "@#{attr} = value.split(', ');" if kind == 'list'
-      #  return "@#{attr} = Vertical.to_gallery(value.to_s);" if kind == 'gallery'
-      #  "@#{attr} = value;"
-      #end
-
-      #def self.parse_find attr, kind
-      #  return "self.all.each {|e| return e if e.#{attr} == value};" unless kind == 'list'
-      #  "self.all.each {|e| return e if e.#{attr}.include?(value)};"
-      #end
-
-      #def self.parse_find_all attr, kind
-      #  return "found =[]; self.all.each {|e| found << e if e.#{attr} == value}; found;" unless kind == 'list'
-      #  "found =[]; self.all.each {|e| found << e if e.#{attr}.include?(value)}; found;"
-      #end
-
-      #def self.to_gallery value
-      #  if value.class == String
-      #    begin;
-      #      gal = JSON.parse(value, :symbolize_names => true)
-      #      arr = []
-      #      gal.each do |g|
-      #        arr << Bresson::ImageReference.new(g)
-      #      end
-      #      return arr
-      #    rescue; nil; end
-      #  else
-      #    value
-      #  end
-      #end
-
-      #def self.to_dt value
-      #  if value.class == String
-      #    begin; DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time;
-      #    rescue; nil; end
-      #  else
-      #    value
-      #  end
-      #end
-
-      #def self.to_d value
-      #  if value.class == String
-      #    begin; DateTime.strptime(value, '%m/%d/%Y');
-      #    rescue; nil; end
-      #  else
-      #    value
-      #  end
-      #end
-
-      #def self.to_bresson value
-      #  begin; Bresson::ImageReference.new JSON.parse(value[1..-2], :symbolize_names => true)
-      #  rescue; nil; end
-      #end
 
   end
 
