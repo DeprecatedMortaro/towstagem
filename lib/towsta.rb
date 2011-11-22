@@ -13,10 +13,10 @@ require 'compass'
 
 Dir[File.expand_path('./towsta/**/*.rb')].each {|file| require file }
 
-#require File.expand_path('../towsta/vertical', __FILE__)
-#require File.expand_path('../towsta/synchronizer', __FILE__)
-#require File.expand_path('../towsta/memory', __FILE__)
-#require File.expand_path('../towsta/sinatra_extension', __FILE__)
+require File.expand_path('../towsta/vertical', __FILE__)
+require File.expand_path('../towsta/synchronizer', __FILE__)
+require File.expand_path('../towsta/memory', __FILE__)
+require File.expand_path('../towsta/sinatra_extension', __FILE__)
 #
 #Dir[File.expand_path('../towsta/kinds/*.rb', __FILE__)].each {|file| require file }
 
