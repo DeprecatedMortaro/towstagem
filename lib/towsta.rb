@@ -11,14 +11,26 @@ require 'bresson'
 require 'sinatra'
 require 'compass'
 
-Dir[File.expand_path('./towsta/**/*.rb')].each {|file| require file }
-
 require File.expand_path('../towsta/vertical', __FILE__)
 require File.expand_path('../towsta/synchronizer', __FILE__)
 require File.expand_path('../towsta/memory', __FILE__)
 require File.expand_path('../towsta/sinatra_extension', __FILE__)
-#
-#Dir[File.expand_path('../towsta/kinds/*.rb', __FILE__)].each {|file| require file }
+require File.expand_path('../towsta/kinds/boolean', __FILE__)
+require File.expand_path('../towsta/kinds/date', __FILE__)
+require File.expand_path('../towsta/kinds/datetime', __FILE__)
+require File.expand_path('../towsta/kinds/file', __FILE__)
+require File.expand_path('../towsta/kinds/formated', __FILE__)
+require File.expand_path('../towsta/kinds/gallery', __FILE__)
+require File.expand_path('../towsta/kinds/image', __FILE__)
+require File.expand_path('../towsta/kinds/integer', __FILE__)
+require File.expand_path('../towsta/kinds/link', __FILE__)
+require File.expand_path('../towsta/kinds/list', __FILE__)
+require File.expand_path('../towsta/kinds/main', __FILE__)
+require File.expand_path('../towsta/kinds/money', __FILE__)
+require File.expand_path('../towsta/kinds/password', __FILE__)
+require File.expand_path('../towsta/kinds/text', __FILE__)
+require File.expand_path('../towsta/kinds/user', __FILE__)
+require File.expand_path('../towsta/kinds/vertical', __FILE__)
 
 module Towsta
 end
