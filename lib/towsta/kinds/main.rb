@@ -25,6 +25,10 @@ module Towsta
         @content.to_s
       end
 
+      def kind
+        self.class.to_s.gsub('Kind','').downcase
+      end
+
     end
 
   end

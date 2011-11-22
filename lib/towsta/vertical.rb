@@ -4,7 +4,6 @@ module Towsta
 
     class << self
       attr_accessor :all
-     # Vertical.all = []
     end
 
     def self.create(args)
