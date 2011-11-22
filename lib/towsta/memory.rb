@@ -7,10 +7,10 @@ module Towsta
     def self.recover params
       md5 = Memory.md5(params)
       if settings.cache.get(md5)
-        puts 'Using cache to Towst'
+        puts "\nUsing cache to Towst"
         Towsta::Synchronizer.new :path => $towsta_path, :cache => settings.cache.get(md5)
       else
-        puts 'Creating cache'
+        puts "\nCreating cache"
         syn = Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
         settings.cache.set(md5,syn.json)
       end

@@ -10,7 +10,7 @@ module Towsta
       @params = args[:params]
       @cache = args[:cache]
       synchronize ? backup : find_old
-      puts just_do_it ? "  Ready to Towst!\n" : "  Unable to keep Towsting!\n"
+      puts just_do_it ? "  Ready to Towst!\n\n" : "  Unable to keep Towsting!\n\n"
     end
 
     def synchronize

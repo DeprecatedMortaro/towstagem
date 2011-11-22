@@ -11,10 +11,12 @@ require 'bresson'
 require 'sinatra'
 require 'compass'
 
-require File.expand_path('../towsta/vertical', __FILE__)
-require File.expand_path('../towsta/synchronizer', __FILE__)
-require File.expand_path('../towsta/memory', __FILE__)
-require File.expand_path('../towsta/sinatra_extension', __FILE__)
+Dir["#{File.dirname(__FILE__)}/../towsta/**/*.rb"].each { |f| require(f) }
+
+#require File.expand_path('../towsta/vertical', __FILE__)
+#require File.expand_path('../towsta/synchronizer', __FILE__)
+#require File.expand_path('../towsta/memory', __FILE__)
+#require File.expand_path('../towsta/sinatra_extension', __FILE__)
 
 module Towsta
 end
