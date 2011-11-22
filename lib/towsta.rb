@@ -11,6 +11,7 @@ require 'bresson'
 require 'sinatra'
 require 'compass'
 
+require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)
 require File.expand_path('../towsta/synchronizer', __FILE__)
 require File.expand_path('../towsta/memory', __FILE__)
@@ -25,7 +26,6 @@ require File.expand_path('../towsta/kinds/image', __FILE__)
 require File.expand_path('../towsta/kinds/integer', __FILE__)
 require File.expand_path('../towsta/kinds/link', __FILE__)
 require File.expand_path('../towsta/kinds/list', __FILE__)
-require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/kinds/money', __FILE__)
 require File.expand_path('../towsta/kinds/password', __FILE__)
 require File.expand_path('../towsta/kinds/text', __FILE__)
