@@ -1,17 +1,7 @@
 module Towsta
   module Kinds
 
-    class ListKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
-
-      def get
-        @content
-      end
+    class ListKind < MainKind
 
       def set content
         @content = content if content.class == Array

@@ -1,13 +1,7 @@
 module Towsta
   module Kinds
 
-    class UserKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
+    class UserKind < MainKind
 
       def get
         return @content if @content.class == User
@@ -22,7 +16,8 @@ module Towsta
       end
 
       def compare object
-        @content.id.to_i == object.id.to_i
+        return @content.id.to_i == object.id.to_i if object.class == User
+        @content.id.to_i == object.to_i
       end
 
       def export

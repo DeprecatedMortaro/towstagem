@@ -1,17 +1,7 @@
 module Towsta
   module Kinds
 
-    class DateKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
-
-      def get
-        @content
-      end
+    class DateKind < MainKind
 
       def set content
         return @content = content if content.class == DateTime
@@ -20,10 +10,6 @@ module Towsta
         rescue
           @content = nil
         end
-      end
-
-      def compare object
-        @content == object
       end
 
       def export

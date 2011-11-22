@@ -5,7 +5,7 @@ module Towsta
 
       attr_accessor :content
 
-      def initialize content
+      def initialize content=nil
         self.set content
       end
 
@@ -22,7 +22,7 @@ module Towsta
       end
 
       def export
-        @content
+        @content.to_s
       end
 
     end

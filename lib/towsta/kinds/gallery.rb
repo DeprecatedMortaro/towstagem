@@ -1,17 +1,7 @@
 module Towsta
   module Kinds
 
-    class GalleryKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
-
-      def get
-        @content
-      end
+    class GalleryKind < MainKind
 
       def set content
         return @content = content if content.class == Array
@@ -22,14 +12,6 @@ module Towsta
         rescue
           @content = []
         end
-      end
-
-      def compare object
-        @content == object
-      end
-
-      def export
-        @content
       end
 
     end

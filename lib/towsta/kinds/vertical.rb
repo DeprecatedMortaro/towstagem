@@ -1,13 +1,7 @@
 module Towsta
   module Kinds
 
-    class VerticalKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
+    class VerticalKind < MainKind
 
       def get
         return @content if @content.class != String
@@ -22,18 +16,24 @@ module Towsta
       end
 
       def set content
-        klasses = Vertical.all + [User]
         return @content = content if klasses.include? content.class
         @content = content.to_i
       end
 
       def compare object
-        @content.id.to_i == object.id.to_i
+        @content.id.to_i == object.id.to_i if klasses.include? object.class
+        @content.id.to_i == object.to_i
       end
 
       def export
         @content.id.to_s
       end
+
+      private
+
+        def klasses
+          Vertical.all + [User]
+        end
 
     end
 

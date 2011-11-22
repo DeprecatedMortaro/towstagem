@@ -1,29 +1,7 @@
 module Towsta
   module Kinds
 
-    class LinkKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
-
-      def get
-        @content
-      end
-
-      def set content
-        @content = content.to_s
-      end
-
-      def compare object
-        @content == object
-      end
-
-      def export
-        @content
-      end
+    class LinkKind < MainKind
 
     end
 

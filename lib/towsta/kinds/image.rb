@@ -1,17 +1,7 @@
 module Towsta
   module Kinds
 
-    class ImageKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
-
-      def get
-        @content
-      end
+    class ImageKind < MainKind
 
       def set content
         begin
@@ -19,14 +9,6 @@ module Towsta
         rescue
           @content = nil
         end
-      end
-
-      def compare object
-        @content == object
-      end
-
-      def export
-        @content
       end
 
     end

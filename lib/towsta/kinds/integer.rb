@@ -1,17 +1,7 @@
 module Towsta
   module Kinds
 
-    class IntegerKind
-
-      attr_accessor :content
-
-      def initialize content
-        self.set content
-      end
-
-      def get
-        @content
-      end
+    class IntegerKind < MainKind
 
       def set content
         @content = content.to_i
@@ -19,10 +9,6 @@ module Towsta
 
       def compare object
         @content == object.to_i
-      end
-
-      def export
-        @content.to_s
       end
 
     end
