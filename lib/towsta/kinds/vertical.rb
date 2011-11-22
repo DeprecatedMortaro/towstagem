@@ -4,7 +4,7 @@ module Towsta
     class VerticalKind < MainKind
 
       def get
-        return @content if @content.class != String
+        return @content if @content.class != Fixnum
         Vertical.all.each do |v|
           horizontal = v.find_by_id @content
           if horizontal

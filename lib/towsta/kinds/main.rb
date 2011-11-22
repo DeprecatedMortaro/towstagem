@@ -26,7 +26,7 @@ module Towsta
       end
 
       def kind
-        self.class.to_s.gsub('Kind','').downcase
+        self.class.to_s.split('::').last.gsub('Kind','').downcase
       end
 
     end
