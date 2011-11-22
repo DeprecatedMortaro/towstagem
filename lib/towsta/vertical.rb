@@ -17,11 +17,11 @@ module Towsta
         args[:slices].each do |attr, kind|
           begin
             kind_class = kind[0].upcase + kind[1..-1]
-            kind_class = eval("Towsta::Kinds::#{kind_class}Kind")
+            kind_class = eval("Towsta::Kinds::#{kind_class}Kind").to_s
           rescue
-            kind_class = Towsta::Kinds::MainKind
+            kind_class = "Towsta::Kinds::MainKind"
           end
-          eval "def #{attr}= value; @#{attr} ||= kind_class.new; @#{attr}.set value; end;"
+          eval "def #{attr}= value; @#{attr} ||= #{kind_class}.new; @#{attr}.set value; end;"
           eval "def #{attr}; @#{attr}.get; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr}.compare value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found =[]; self.all.each {|e| found << e if e.#{attr}.compare value}; found; end;"
