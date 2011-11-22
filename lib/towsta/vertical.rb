@@ -15,7 +15,8 @@ module Towsta
         end
 
         args[:slices].each do |attr, kind|
-          eval "def #{attr}= value; @#{attr}= Towsta::Kinds::#{kind[0].upcase + kind[1..-1]}Kind.new value; end;"
+          eval "@#{attr}= Towsta::Kinds::#{kind[0].upcase + kind[1..-1]}Kind.new;"
+          eval "def #{attr}= value; @#{attr}.set value; end;"
           eval "def #{attr}; @#{attr}.get; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr}.compare value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found =[]; self.all.each {|e| found << e if e.#{attr}.compare value}; found; end;"
