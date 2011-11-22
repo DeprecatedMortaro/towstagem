@@ -16,7 +16,7 @@ module Towsta
 
         args[:slices].each do |attr, kind|
           kind_class = kind[0].upcase + kind[1..-1]
-          kind_class = defined? eval("Towsta::Kinds::#{kind_class}Kind") ? kind_class : 'Main'
+          kind_class = 'Main'#defined? eval("Towsta::Kinds::#{kind_class}Kind") ? kind_class : 'Main'
           eval "@#{attr}= Towsta::Kinds::#{kind_class}Kind.new;"
           eval "def #{attr}= value; @#{attr}.set value; end;"
           eval "def #{attr}; @#{attr}.get; end;"
