@@ -11,7 +11,7 @@ require 'bresson'
 require 'sinatra'
 require 'compass'
 
-Dir["#{File.dirname(__FILE__)}/../towsta/**/*.rb"].each { |f| require(f) }
+Dir["../towsta/**/*.rb"].each { |f| require(f) }
 
 #require File.expand_path('../towsta/vertical', __FILE__)
 #require File.expand_path('../towsta/synchronizer', __FILE__)
