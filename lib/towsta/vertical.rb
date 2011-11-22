@@ -15,10 +15,13 @@ module Towsta
         end
 
         args[:slices].each do |attr, kind|
-          kind_class = kind[0].upcase + kind[1..-1]
-          puts 'classe original: '+ kind_class
-          kind_class = 'Main'# defined?(eval("Towsta::Kinds::#{kind_class}Kind")) ? kind_class : 'Main'
-          eval "def #{attr}= value; @#{attr} ||= Towsta::Kinds::#{kind_class}Kind.new; @#{attr}.set value; end;"
+          begin
+            kind_class = kind[0].upcase + kind[1..-1]
+            kind_class = eval("Towsta::Kinds::#{kind_class}Kind")
+          rescue
+            kind_class = Towsta::Kinds::MainKind
+          end
+          eval "def #{attr}= value; @#{attr} ||= kind_class.new; @#{attr}.set value; end;"
           eval "def #{attr}; @#{attr}.get; end;"
           eval "def self.find_by_#{attr} value; self.all.each {|e| return e if e.#{attr}.compare value}; nil; end;"
           eval "def self.find_all_by_#{attr} value; found =[]; self.all.each {|e| found << e if e.#{attr}.compare value}; found; end;"
