@@ -21,12 +21,12 @@ module Towsta
       end
 
       def compare object
-        @content.id.to_i == object.id.to_i if klasses.include? object.class
-        @content.id.to_i == object.to_i
+        self.get.id.to_i == object.id.to_i if klasses.include? object.class
+        self.get.id.to_i == object.to_i
       end
 
       def export
-        @content.id.to_s
+        self.get.id.to_s
       end
 
       private

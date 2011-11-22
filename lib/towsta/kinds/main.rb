@@ -18,7 +18,7 @@ module Towsta
       end
 
       def compare object
-        @content == object
+        self.get == object
       end
 
       def export

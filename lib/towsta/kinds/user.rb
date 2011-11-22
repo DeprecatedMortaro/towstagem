@@ -16,12 +16,12 @@ module Towsta
       end
 
       def compare object
-        return @content.id.to_i == object.id.to_i if object.class == User
-        @content.id.to_i == object.to_i
+        return self.get.id.to_i == object.id.to_i if object.class == User
+        self.get.id.to_i == object.to_i
       end
 
       def export
-        @content.id.to_s
+        self.get.id.to_s
       end
 
     end

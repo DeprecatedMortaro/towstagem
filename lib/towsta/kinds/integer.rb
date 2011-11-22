@@ -8,7 +8,7 @@ module Towsta
       end
 
       def compare object
-        @content == object.to_i
+        self.get == object.to_i
       end
 
     end
