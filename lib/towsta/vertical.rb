@@ -35,7 +35,8 @@ module Towsta
         end
 
         def initialize args
-          args.each {|k,v| eval "self.#{k}= '#{v}';"}
+#          args.each {|k,v| eval "self.#{k}= '#{v}';"}
+          self.class.attributes.each {|k,v| eval "self.#{k}= args[#{k}];"}
           self.class.all << self
         end
 
@@ -93,7 +94,7 @@ module Towsta
 
         def attributes
           horizontal = {:vertical => self.class.to_s}
-          self.class.attributes.each {|attr| horizontal[attr] = eval("self.object_of#{attr.to_s}").export}
+          self.class.attributes.each {|attr| horizontal[attr] = eval("self.object_of_#{attr.to_s}").export}
           horizontal
         end
 
