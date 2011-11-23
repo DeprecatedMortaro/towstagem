@@ -21,7 +21,7 @@ module Towsta
     end
 
     def self.md5 params
-      digest = Digest::MD5.hexdigest(params.inspect.to_s)
+      digest = Digest::MD5.hexdigest(params.inspect.to_s + 'Towsta')
     end
 
   end

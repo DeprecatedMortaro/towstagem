@@ -1,7 +1,7 @@
 module Towsta
   class Synchronizer
 
-    attr_accessor :secret, :params, :cache
+    attr_accessor :secret, :params, :cache, :response
 
     def initialize args
       Vertical.all = []
@@ -27,8 +27,8 @@ module Towsta
 
     def create_verticals
       return false unless parse_json
-      create_vertical({:name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}}, @response[:users])
-      @response[:structures].each_with_index {|structure, i| create_vertical(structure, @response[:verticals][i][:horizontals], @response[:verticals][i][:occurrences])}
+      create_vertical({:name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}}, @hash[:users])
+      @response[:structures].each_with_index {|structure, i| create_vertical(structure, @hash[:verticals][i][:horizontals], @hash[:verticals][i][:occurrences])}
     end
 
     private
@@ -38,8 +38,10 @@ module Towsta
         uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
         uri += "?query=#{CGI::escape(@params.to_json)}" if @params
         @response = Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
+        puts "\nSynchronized with Towsta!"
         return true
       rescue
+        puts "\nFailed to synchronize with Towsta."
         return false
       end
     end
@@ -69,7 +71,7 @@ module Towsta
 
     def parse_json
       begin
-        @response = JSON.parse @response, :symbolize_names => true
+        @hash = JSON.parse @response, :symbolize_names => true
         return true
       rescue
         puts '  Something went wrong tryng to parse JSON.'
@@ -78,12 +80,11 @@ module Towsta
     end
 
     def create_vertical structure, horizontals, occurrences=[]
-      #Object.send(:remove_const, :User) if defined? eval(structure[:name].to_s)
       Vertical.create structure
       Vertical.all << eval(structure[:name])
       horizontals.each {|horizontal| eval(structure[:name].to_s).new(horizontal)}
       occurrences.each {|occurrence| eval(structure[:name].to_s).add_occurrence(occurrence)}
-      puts "  vertical #{structure[:name]} was created with #{horizontals.size} horizontals"
+      puts "  class #{structure[:name]} was created with #{horizontals.size} instances"
     end
 
   end
