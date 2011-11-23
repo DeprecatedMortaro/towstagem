@@ -16,6 +16,17 @@ module Towsta
       end
     end
 
+    def self.save_request export
+      begin
+        uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
+        return JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
+      rescue
+        {:status => false}
+      end
+    end
+
+    private
+
     def synchronize
       if has_secret && (cache_string || remote_string)
         return false unless validate_secret
@@ -30,8 +41,6 @@ module Towsta
       create_vertical({:name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}}, @hash[:users])
       @hash[:structures].each_with_index {|structure, i| create_vertical(structure, @hash[:verticals][i][:horizontals], @hash[:verticals][i][:occurrences])}
     end
-
-    private
 
     def remote_string
       begin

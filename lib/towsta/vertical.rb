@@ -64,8 +64,7 @@ module Towsta
           id_aux = export.delete(:id)
           id_aux ? id_aux : '0'
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
-          uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
-          response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
+          response = Towsta::Synchronizer.save_request export
           self.id = response[:id] if response[:status]
           self.author = User.find_by_email creator
           Towsta::Memory.flush if $towsta_cache
