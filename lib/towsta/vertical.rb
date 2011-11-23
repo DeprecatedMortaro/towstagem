@@ -35,8 +35,7 @@ module Towsta
         end
 
         def initialize args
-          args = self.attributes.merge args
-          args.each {|k,v| eval "self.#{k}= '#{v}';"}
+          self.attributes.merge(args).each {|k,v| eval "self.#{k}= '#{v}';"}
           self.class.all << self
         end
 
@@ -45,20 +44,20 @@ module Towsta
           self.save author
         end
 
-        def self.update args
-          self.find(args[:id]).update(args)
-        end
+        #def self.update args
+        #  self.find(args[:id]).update(args)
+        #end
 
         def destroy
-          self.class.all.delete self
-          self
+        #  self.class.all.delete self
+        #  self
         end
 
-        def self.destroy id
-          element = self.find id
-          self.all.delete element
-          element
-        end
+        #def self.destroy id
+        #  element = self.find id
+        #  self.all.delete element
+        #  element
+        #end
 
         def self.to_hash
           hashes = []
@@ -70,17 +69,17 @@ module Towsta
           creator = author.email if author
           export = self.attributes
           export.delete :author
-          export.delete :vertical
+         # export.delete :vertical
           export.delete :created_at
           export.delete :updated_at
           id_aux = export.delete(:id)
           id_aux ? id_aux : '0'
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
-          uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
-          response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
-          self.id = response[:id] if response[:status]
-          Towsta::Memory.flush if $towsta_cache
-          response
+         # uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
+         # response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
+         # self.id = response[:id] if response[:status]
+         # Towsta::Memory.flush if $towsta_cache
+         # response
         end
 
         def self.random
