@@ -6,7 +6,7 @@ module Towsta
       def set content
         return @content = content if content.class == Array
         begin
-          gal = JSON.parse(value, :symbolize_names => true)
+          gal = JSON.parse(content, :symbolize_names => true)
           @content = []
           gal.each {|g| @content << Bresson::ImageReference.new(g)}
         rescue

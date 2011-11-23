@@ -6,7 +6,7 @@ module Towsta
       def set content
         return @content = content if content.class == Time
         begin
-          @content = DateTime.strptime(value, '%m/%d/%Y %H:%M').to_time
+          @content = DateTime.strptime(content, '%m/%d/%Y %H:%M').to_time
         rescue
           @content = nil
         end
