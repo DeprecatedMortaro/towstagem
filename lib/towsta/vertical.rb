@@ -77,7 +77,9 @@ module Towsta
         end
 
         def self.create args, creator=$towsta_default_author
-          self.new(args.merge(:id => nil)).save creator
+          new = self.new(args.merge(:id => nil))
+          new.save creator
+          new
         end
 
         def attributes
