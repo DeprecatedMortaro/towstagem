@@ -8,7 +8,7 @@ module Towsta
       md5 = Memory.md5(params)
       if settings.cache.get(md5)
         puts "\nUsing cache to Towst"
-        Towsta::Synchronizer.new :path => $towsta_path, :cache => settings.cache.get(md5)
+        Towsta::Synchronizer.new :path => $towsta_path, :cache => settings.cache.get(md5), :secret => $towsta_secret
       else
         puts "\nCreating cache"
         syn = Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
