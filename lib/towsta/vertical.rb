@@ -35,8 +35,7 @@ module Towsta
         end
 
         def initialize args
-          attrs = self.attributes.delete :vertical
-          args = attrs.merge args
+          args = self.attributes.merge args
           args.each {|k,v| eval "self.#{k}= '#{v}';"}
           self.class.all << self
         end
@@ -94,7 +93,7 @@ module Towsta
         end
 
         def attributes
-          horizontal = {:vertical => self.class.to_s}
+          horizontal = {}
           self.class.attributes.each do |attr|
             slice = eval("self.object_of_#{attr.to_s}")
             horizontal[attr] = slice ? slice.export : nil
