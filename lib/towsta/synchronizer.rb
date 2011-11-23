@@ -50,13 +50,13 @@ module Towsta
     end
 
     def validate_secret
-      return true if @response == " "
+      return true if @response != " "
       puts "  maybe your secret is wrong"
       false
     end
 
     def validate_response
-      return true if @response[0] != "{"
+      return true if @response[0] == "{"
       puts "  something wrong with the server"
       false
     end
