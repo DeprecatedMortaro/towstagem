@@ -13,7 +13,8 @@ module Towsta
       end
 
       def export
-        @content.strftime('%m/%d/%Y %H:%M')
+        return @content.strftime('%m/%d/%Y %H:%M') if @content.class == Time
+        @content.to_s
       end
 
     end
