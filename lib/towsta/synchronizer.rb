@@ -9,8 +9,8 @@ module Towsta
       @params = args[:params]
       @cache = args[:cache]
       if synchronize
-        puts "  Ready to Towst!\n\n"
         create_verticals
+        puts "  Ready to Towst!\n\n"
       else
         puts "  Unable to keep Towsting!\n\n"
       end
@@ -23,6 +23,10 @@ module Towsta
       rescue
         {:status => false}
       end
+    end
+
+    def self.authentication_request params
+      {:status => true, :id => 10}
     end
 
     private

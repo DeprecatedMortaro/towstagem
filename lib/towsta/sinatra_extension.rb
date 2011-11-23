@@ -2,7 +2,13 @@ helpers do
   def partial page
     haml "partials/_#{page}".to_sym
   end
+
+  def current_user
+    Towsta::Login.rescue
+  end
 end
+
+enable :session
 
 post '/flush' do
   clear_sync
