@@ -10,7 +10,6 @@ require 'time'
 require 'bresson'
 require 'sinatra'
 require 'compass'
-require 'sinatra/sessionography'
 
 require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)
