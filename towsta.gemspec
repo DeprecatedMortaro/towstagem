@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency("haml")
   s.add_dependency("sinatra")
   s.add_dependency("shotgun")
+  s.add_dependency("sinatra-sessiongraphy")
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
