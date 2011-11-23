@@ -1,105 +1,91 @@
 module Towsta
   class Synchronizer
 
-    attr_accessor :secret, :path, :json, :params, :cache
+    attr_accessor :secret, :params, :cache
 
     def initialize args
       Vertical.all = []
       @secret = args[:secret]
-      @path = "#{args[:path]}.json"
       @params = args[:params]
       @cache = args[:cache]
-      synchronize ? backup : find_old
-      puts just_do_it ? "  Ready to Towst!\n\n" : "  Unable to keep Towsting!\n\n"
+      if synchronize
+        puts "  Ready to Towst!\n\n"
+        create_verticals
+      else
+        puts "  Unable to keep Towsting!\n\n"
+      end
     end
 
     def synchronize
-      unless @cache.nil?
-        @json = @cache
+      if has_secret && (cache_string || remote_string)
+        return false unless validate_secret
+        return false unless validate_response
         return true
       end
-      unless @secret
-        puts "\nyou cant synchronize without a secret..."
-        return false
-      end
+      false
+    end
+
+    def create_verticals
+      return false unless parse_json
+      create_vertical({:name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}}, @response[:users])
+      @response[:structures].each_with_index {|structure, i| create_vertical(structure, @response[:verticals][i][:horizontals], @response[:verticals][i][:occurrences])}
+    end
+
+    private
+
+    def remote_string
       begin
         uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
         uri += "?query=#{CGI::escape(@params.to_json)}" if @params
-        Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
-        puts "\nSynchronized with towsta..."
-        if @json == " "
-          puts '  Maybe your secret is wrong...'
-          return false
-        elsif @json[0] != "{"
-          puts "  something wrong with the server"
-          return false
-        else
-          return true
-        end
+        @response = Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
+        return true
       rescue
-        puts '  failed to synchronize with towsta...'
         return false
       end
     end
 
-    def backup
-      if @path != ".json"
-        open(@path, "wb"){|file| file.write @json}
-        puts "\n creating a backup in #{@path}"
-      end
+    def cache_string
+      @response = @cache if @cache
+      !!@cache
     end
 
-    def find_old
-      unless File.exists? @path
-        puts "\n could not find any old version..."
-      else
-        @json = IO.read(@path).to_s
-        puts "\n assuming newest backup..."
-      end
+    def validate_secret
+      return true if @response == " "
+      puts "  maybe your secret is wrong"
+      false
     end
 
-    def just_do_it
-      return false if @hash == " "
+    def validate_response
+      return true if @response[0] != "{"
+      puts "  something wrong with the server"
+      false
+    end
+
+    def has_secret
+      return true if @secret
+      puts "\nyou cant synchronize without a secret..."
+      false
+    end
+
+    def parse_json
       begin
-        hash = JSON.parse @json, :symbolize_names => true
+        @response = JSON.parse @response, :symbolize_names => true
+        return true
       rescue
         puts '  Something went wrong tryng to parse JSON.'
         return false
       end
-      begin
-        Object.send(:remove_const, :User)
-      rescue;nil;end
-      Vertical.create :name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}
-      hash[:users].each {|user| User.new user}
-      hash[:structures].each_with_index do |structure, i|
-        begin
-          Object.send(:remove_const, structure[:name].to_sym)
-        rescue;nil;end
-        Vertical.create structure
-        Vertical.all << eval(structure[:name])
-        hash[:verticals][i][:horizontals].each {|horizontal| Vertical.all.last.new horizontal}
-        puts "  vertical #{structure[:name]} was created with #{hash[:verticals][i][:horizontals].size} horizontals"
-        if hash[:verticals][i][:occurrences].any?
-          hash[:verticals][i][:occurrences].each do |occurrence|
-            Vertical.all.last.add_occurrence occurrence
-          end
-        end
-      end
-      true
     end
 
-    #def self.callback json
-    #  json = JSON.parse json, :symbolize_names => true
-    #  return eval(json[:vertical]).new json[:attributes] if json[:action] == 'create'
-    #  return eval(json[:vertical]).update json[:attributes] if json[:action] == 'update'
-    #  eval(json[:vertical]).destroy json[:attributes][:id]
-    #end
-
-    #def authenticate code
-    #  JSON.parse Net::HTTP.start("manager.towsta.com"){|http| @json = http.get("/synchronizers/#{@secret}/#{code}.json").body}, :symbolize_names => true
-    #end
+    def create_vertical structure, horizontals, occurrences=[]
+      Object.send(:remove_const, :User) if defined? eval(structure[:name].to_s)
+      Vertical.create structure
+      Vertical.all << eval(structure[:name])
+      horizontals.each {|horizontal| eval(structure[:name].to_s).new(horizontal)}
+      occurrences.each {|occurrence| eval(structure[:name].to_s).add_occurrence(occurrence)}
+      puts "  vertical #{structure[:name]} was created with #{horizontals.size} horizontals"
+    end
 
   end
 
 end
-

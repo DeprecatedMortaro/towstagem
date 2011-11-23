@@ -67,6 +67,7 @@ module Towsta
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
           response = JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
           self.id = response[:id] if response[:status]
+          self.author = User.find_by_email creator
           Towsta::Memory.flush if $towsta_cache
           response[:status]
         end
