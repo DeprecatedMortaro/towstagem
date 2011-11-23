@@ -78,7 +78,7 @@ module Towsta
     end
 
     def create_vertical structure, horizontals, occurrences=[]
-      Object.send(:remove_const, :User) if defined? eval(structure[:name].to_s)
+      #Object.send(:remove_const, :User) if defined? eval(structure[:name].to_s)
       Vertical.create structure
       Vertical.all << eval(structure[:name])
       horizontals.each {|horizontal| eval(structure[:name].to_s).new(horizontal)}
