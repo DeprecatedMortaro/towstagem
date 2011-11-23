@@ -12,7 +12,7 @@ module Towsta
       else
         puts "\nCreating cache"
         syn = Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
-        settings.cache.set(md5,syn.json)
+        settings.cache.set(md5,syn.response)
       end
     end
 
