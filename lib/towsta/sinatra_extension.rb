@@ -1,14 +1,27 @@
+enable :sessions
+
 helpers do
+
   def partial page
     haml "partials/_#{page}".to_sym
   end
 
-  def current_user
-    Towsta::Login.rescue
+  def authenticate args
+    response = Towsta::Synchronizer.authentication_request args
+    session[:current_user] = response[:id] if response[:status]
+    response[:status]
   end
-end
 
-enable :session
+  def current_user
+    return User.find(session[:current_user]) if defined? User
+    session[:current_user]
+  end
+
+  def forget
+    session[:current_user] = nil
+  end
+
+end
 
 post '/flush' do
   clear_sync
