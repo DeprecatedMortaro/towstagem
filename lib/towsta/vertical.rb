@@ -35,8 +35,8 @@ module Towsta
         end
 
         def initialize args
-#          args.each {|k,v| eval "self.#{k}= '#{v}';"}
-          self.class.attributes.each {|k,v| eval "self.#{k}= args[#{k}];"}
+          args = self.attributes.merge args
+          args.each {|k,v| eval "self.#{k}= '#{v}';"}
           self.class.all << self
         end
 
