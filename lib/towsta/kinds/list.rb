@@ -4,8 +4,8 @@ module Towsta
     class ListKind < MainKind
 
       def set content
-        @content = content if content.class == Array
-        @content = content.split(', ')
+        return @content = content.join(', ').split(', ') if content.class == Array
+        @content = content.to_s.split(', ')
       end
 
       def compare object
