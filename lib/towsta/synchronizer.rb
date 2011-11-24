@@ -21,12 +21,17 @@ module Towsta
         uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
         return JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
       rescue
-        {:status => false}
+        return {:status => false}
       end
     end
 
     def self.authentication_request params
-      {:status => true, :id => 10}
+      begin
+        uri = URI.parse("http://manager.towsta.com/authenticate")
+        return JSON.parse Net::HTTP.post_form(uri, params).body.to_s, :symbolize_names => true
+      rescue
+        return {:status => false}
+      end
     end
 
     private
