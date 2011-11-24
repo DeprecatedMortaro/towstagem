@@ -22,7 +22,7 @@ module Towsta
 
       def compare object
         self.get.id.to_i == object.id.to_i if klasses.include? object.class
-        self.get.id.to_i == object.to_i
+        self.get == object
       end
 
       def export
