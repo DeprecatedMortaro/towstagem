@@ -37,6 +37,7 @@ if action == 'new'
   index = '%h1 Hello Towsta'
   File.open("#{project}/views/index.haml", 'w') {|f| f.write(index)}
   Dir.mkdir "#{project}/models"
+  Dir.mkdir "#{project}/controllers"
   Dir.mkdir "#{project}/public"
   Dir.mkdir "#{project}/views/stylesheets"
   css = "@import compass/reset\n"
@@ -51,7 +52,7 @@ if action == 'new'
   File.open("#{project}/views/stylesheets/#{project}.sass", 'w') {|f| f.write(css)}
   Dir.mkdir "#{project}/views/partials"
   head = "%title #{project}\n"
-  head += "%meta{'http-equiv': 'Content-Type', content: 'text/html', charset: 'utf-8'}\n"
+  head += "%meta{:'http-equiv' => 'Content-Type', :content => 'text/html', :charset => 'utf-8'}\n"
   head += "%link{rel: 'stylesheet', type: 'text/css', href: '/stylesheets/#{project}.css'}\n"
   head += "%link{rel: 'shortcut icon', type: 'image/x-icon', href: '/images/favicon.png'}\n"
   head += "%script{src: '/js/jquery.js'}\n"

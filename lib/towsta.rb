@@ -33,6 +33,8 @@ require File.expand_path('../towsta/kinds/text', __FILE__)
 require File.expand_path('../towsta/kinds/user', __FILE__)
 require File.expand_path('../towsta/kinds/vertical', __FILE__)
 
+Dir["./controllers/*.rb"].each {|file| require file}
+
 module Towsta
 end
 
