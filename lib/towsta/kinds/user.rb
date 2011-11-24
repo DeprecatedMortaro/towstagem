@@ -11,10 +11,10 @@ module Towsta
       end
 
       def set content
-#        return @content = content if content.class == User
-#        return @content = content.to_i if content.to_i != 0
-#        @content = nil
-         @content = content
+        return @content = content if content.class == User
+        return @content = content.to_i if content.to_i != 0
+        @content = nil
+        @content = content
       end
 
       def compare object
