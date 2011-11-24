@@ -5,15 +5,16 @@ module Towsta
 
       def get
         return @content if @content.class == User
-        user = User.find @content
+        user = User.find @content.to_i
         @content = user if user
         @content
       end
 
       def set content
-        return @content = content if content.class == User
-        return @content = content.to_i if content.to_i != 0
-        @content = nil
+#        return @content = content if content.class == User
+#        return @content = content.to_i if content.to_i != 0
+#        @content = nil
+         @content = content
       end
 
       def compare object
