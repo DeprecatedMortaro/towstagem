@@ -42,7 +42,7 @@ module Towsta
         end
 
         def update args, author=$towsta_default_author
-          args.each {|k,v| eval "self.#{k}= '#{v}';"}
+          args.each {|k,v| self.send("#{k}=".to_sym, v)}
           self.save author
         end
 
