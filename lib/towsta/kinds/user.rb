@@ -22,7 +22,7 @@ module Towsta
       end
 
       def export
-        return @content.id.to_s if @content.class == User
+        return @content.id.to_s if self.get.class == User
         @content.to_s
       end
 

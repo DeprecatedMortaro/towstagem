@@ -26,7 +26,7 @@ module Towsta
       end
 
       def export
-        return @content.id.to_s if klasses.include? @content.class
+        return @content.id.to_s if klasses.include? self.get.class
         @content.to_s
       end
 

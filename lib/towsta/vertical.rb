@@ -13,7 +13,7 @@ module Towsta
           attr_accessor :all, :attributes, :count
         end
 
-        attr_accessor :response
+        attr_accessor :message
 
         args[:slices].each do |attr, kind|
           eval "def object_of_#{attr}; @#{attr}; end;"
@@ -67,7 +67,7 @@ module Towsta
           id_aux ? id_aux : '0'
           export = {:creator => creator, :vertical => self.class.to_s, :attributes => export, :id => id_aux}
           response = Towsta::Synchronizer.save_request export
-          @response = response
+          @message = response[:message]
           self.id = response[:id] if response[:status]
           self.author = User.find_by_email creator
           Towsta::Memory.flush if $towsta_cache
