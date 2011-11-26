@@ -11,6 +11,11 @@ module Towsta
         end
       end
 
+      def export
+        return '' if @content.nil?
+        "(#{@content.to_s})"
+      end
+
     end
 
   end

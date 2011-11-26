@@ -14,6 +14,12 @@ module Towsta
         end
       end
 
+      def export
+        string = '['
+        @content.each {|con| string << "#{con.to_s},"}
+        "#{string[0..-2]}]"
+      end
+
     end
 
   end
