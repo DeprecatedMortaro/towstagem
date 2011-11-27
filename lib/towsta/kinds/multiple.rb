@@ -12,12 +12,12 @@ module Towsta
       def get
         return @content if @content.class == Array
         aux = []
-        @content.to_s.split(' ').each do |i|
-          Vertical.all.each do |v|
-            horizontal = v.find_by_id i
-            aux << horizontal if horizontal
-          end
-        end
+        aux = @content.to_s.split(' ')#.each do |i|
+#          Vertical.all.each do |v|
+ #           horizontal = v.find_by_id i
+  #          aux << horizontal if horizontal
+   #       end
+    #    end
         @content = aux
         @content
       end
