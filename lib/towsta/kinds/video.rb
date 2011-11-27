@@ -12,6 +12,10 @@ module Towsta
         end
       end
 
+      def compare object
+        @content.to_s == object.to_s
+      end
+
     end
 
   end
