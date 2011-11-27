@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency("compass")
   s.add_dependency("haml")
   s.add_dependency("sinatra")
+  s.add_dependency("cameraman")
   s.add_dependency("shotgun")
 
   s.files         = `git ls-files`.split("\n")

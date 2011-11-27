@@ -8,6 +8,7 @@ require 'time'
 require 'date'
 require 'time'
 require 'bresson'
+require 'cameraman'
 require 'sinatra'
 require 'compass'
 
@@ -47,9 +48,7 @@ def sync_with_towsta params=nil
   else
     Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
   end
-  begin
-    Dir["./models/*.rb"].each {|file| load file }
-  rescue; end;
+  Dir["./models/*.rb"].each {|file| load file }
 end
 
 def clear_sync

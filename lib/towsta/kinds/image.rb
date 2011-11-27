@@ -4,6 +4,7 @@ module Towsta
     class ImageKind < MainKind
 
       def set content
+        return @content = content if content.class == Bresson::ImageReference
         begin
           @content = Bresson::ImageReference.new JSON.parse(content[1..-2], :symbolize_names => true)
         rescue
