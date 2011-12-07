@@ -4,6 +4,7 @@ module Towsta
     class MoneyKind < MainKind
 
       def set content
+        content = content.gsub('.','').gsub(',','.') if content.class == String
         @content = content.to_f
       end
 
