@@ -11,6 +11,8 @@ require 'bresson'
 require 'cameraman'
 require 'sinatra'
 require 'compass'
+require 'sinatra/content_for'
+require 'sinatra/r18n'
 
 require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)

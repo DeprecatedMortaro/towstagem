@@ -15,6 +15,12 @@ module Towsta
 
         attr_accessor :message
 
+        include R18n::Helpers
+
+        def i18n attr
+          self.send eval("t.models.#{self.class.to_s.downcase}.#{attr.to_s}").to_sym
+        end
+
         args[:slices].each do |attr, kind|
           eval "def object_of_#{attr}; @#{attr}; end;"
           eval "def #{attr}= value; @#{attr} ||= Towsta::Kinds::#{kind[0].upcase + kind[1..-1]}Kind.new; @#{attr}.set value; end;"

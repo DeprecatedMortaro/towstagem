@@ -1,5 +1,6 @@
 enable :sessions
 set :session_secret, ENV['SESSION_KEY']
+set :translations, 'locales'
 
 helpers do
 
