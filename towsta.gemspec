@@ -23,7 +23,10 @@ Gem::Specification.new do |s|
   s.add_dependency("cameraman")
   s.add_dependency("shotgun")
   s.add_dependency("sinatra-content-for")
-  s.add_dependency("sinatra-r18n")
+  s.add_dependency("i18n-router")
+  s.add_dependency("pony")
+  s.add_dependency("coffee-script")
+  s.add_dependency("therubyracer")
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

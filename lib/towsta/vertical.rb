@@ -21,6 +21,27 @@ module Towsta
           self.send eval("t.models.#{self.class.to_s.downcase}.#{attr.to_s}").to_sym
         end
 
+        def to_mail
+          string = ''
+          meta_attributes.each do |attribute, value|
+            string << "<b>#{attribute.to_s}:</b> #{value} <br/>"
+          end
+          string
+        end
+
+        def meta_attributes
+          a = attributes.clone
+          a.delete :author
+          a.delete :created_at
+          a.delete :updated_at
+          a.delete :id
+          a
+        end
+
+        def notify args
+          Pony.mail({:html_body => to_mail}.merge(args))
+        end
+
         args[:slices].each do |attr, kind|
           eval "def object_of_#{attr}; @#{attr}; end;"
           eval "def #{attr}= value; @#{attr} ||= Towsta::Kinds::#{kind[0].upcase + kind[1..-1]}Kind.new; @#{attr}.set value; end;"

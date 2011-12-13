@@ -40,6 +40,7 @@ if action == 'new'
   Dir.mkdir "#{project}/controllers"
   Dir.mkdir "#{project}/public"
   Dir.mkdir "#{project}/views/stylesheets"
+  Dir.mkdir "#{project}/views/javascripts"
   css = "@import compass/reset\n"
   css += "@import compass/css3\n\n"
   css += "$wrapper: 940px\n\n"
@@ -49,22 +50,23 @@ if action == 'new'
   css += "#top, #middle, #bottom\n"
   css += "  :float left\n"
   css += "  :width 100%"
-  File.open("#{project}/views/stylesheets/#{project}.sass", 'w') {|f| f.write(css)}
+  File.open("#{project}/views/stylesheets/app.sass", 'w') {|f| f.write(css)}
+  js = '$ ->'
+  File.open("#{project}/views/javascripts/app.coffee", 'w') {|f| f.write(js)}
   Dir.mkdir "#{project}/views/partials"
   head = "%title #{project}\n"
   head += "%meta{:'http-equiv' => 'Content-Type', :content => 'text/html', :charset => 'utf-8'}\n"
-  head += "%link{rel: 'stylesheet', type: 'text/css', href: '/stylesheets/#{project}.css'}\n"
+  head += "%link{rel: 'stylesheet', type: 'text/css', href: '/stylesheets/app.css'}\n"
   head += "%link{rel: 'shortcut icon', type: 'image/x-icon', href: '/images/favicon.png'}\n"
   head += "%script{src: '/js/jquery.js'}\n"
-  head += "%script{src: '/js/#{project}.js'}"
+  head += "%script{src: '/js/app.js'}"
   File.open("#{project}/views/partials/_head.haml", 'w') {|f| f.write(head)}
   Dir.mkdir "#{project}/public/js"
-  js = "$(function() {\n\n"
-  js += "});"
-  File.open("#{project}/public/js/#{project}.js", 'w') {|f| f.write(js)}
   Net::HTTP.start("code.jquery.com"){|http| @jquery = http.get('/jquery.min.js').body}
   File.open("#{project}/public/js/jquery.js", 'w') {|f| f.write(@jquery)}
   Dir.mkdir "#{project}/public/images"
+  git = '.swp'
+  File.open("#{project}/.gitignore", 'w') {|f| f.write(git)}
   puts "#{project} is ready to towst!"
 elsif action == 'server'
   port = ARGV[1].nil? ? '6937' : ARGV[1]

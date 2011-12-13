@@ -12,7 +12,8 @@ require 'cameraman'
 require 'sinatra'
 require 'compass'
 require 'sinatra/content_for'
-require 'sinatra/r18n'
+require 'i18n-router'
+require 'pony'
 
 require File.expand_path('../towsta/string_extension', __FILE__)
 require File.expand_path('../towsta/kinds/main', __FILE__)
