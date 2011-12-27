@@ -75,7 +75,8 @@ if action == 'new'
   system "cd #{project} && heroku addons:add memcache >/dev/null"
   system "cd #{project} && heroku addons:add custom_domains:basic >/dev/null"
   system "cd #{project} && heroku addons:add zerigo_dns:basic >/dev/null"
-  system "cd #{project} && towsta deploy"
+  system "cd #{project} && bundle install >/dev/null"
+  system "cd #{project} && towsta deploy >/dev/null"
   puts "#{project} is ready to towst!"
 elsif action == 'server'
   port = ARGV[1].nil? ? '6937' : ARGV[1]
