@@ -70,7 +70,7 @@ if action == 'new'
   File.open("#{project}/.gitignore", 'w') {|f| f.write(git)}
   s = "cd #{project}"
   system "cd #{project} && git init >/dev/null"
-  system "cd #{project} && heroku create >/dev/null" unless system "cd #{proejct} && heroku create #{project} >/dev/null"
+  system "cd #{project} && heroku create >/dev/null" unless system "cd #{project} && heroku create #{project} >/dev/null"
   system "cd #{project} && heroku addons:add sendgrid:starter >/dev/null"
   system "cd #{project} && heroku addons:add memcache >/dev/null"
   system "cd #{project} && heroku addons:add custom_domains:basic >/dev/null"
