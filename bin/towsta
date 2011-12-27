@@ -69,12 +69,14 @@ if action == 'new'
   git = '*.swp'
   File.open("#{project}/.gitignore", 'w') {|f| f.write(git)}
   system 'git init'
-  system 'heroku create >NUL' unless system "heroku create #{project} >NUL"
-  system 'heroku addons:add sendgrid:starter >NUL'
-  system 'heroku addons:add memcache >NUL'
-  system 'heroku addons:add custom_domains:basic >NUL'
-  system 'heroku addons:add zerigo_dns:basic >NUL'
-  system 'towsta deploy >NUL'
+  system "stty -echo"
+  system 'heroku create' unless system "heroku create #{project}"
+  system 'heroku addons:add sendgrid:starter'
+  system 'heroku addons:add memcache'
+  system 'heroku addons:add custom_domains:basic'
+  system 'heroku addons:add zerigo_dns:basic'
+  system 'towsta deploy'
+  system "stty echo"
   puts "#{project} is ready to towst!"
 elsif action == 'server'
   port = ARGV[1].nil? ? '6937' : ARGV[1]
@@ -82,10 +84,12 @@ elsif action == 'server'
 elsif action == 'console'
   system 'irb -r ./app.rb'
 elsif action == 'deploy'
-  system 'git add . >NUL'
+  system "stty -echo"
+  system 'git add .'
   message = ARGV[1].nil? ? 'Deployed via Towsta gem' : ARGV[1]
-  system "git commit -a -m '#{message}' >NUL"
-  system 'git push >NUL' unless system 'git push heroku master >NUL'
+  system "git commit -a -m '#{message}'"
+  system 'git push' unless system 'git push heroku master'
+  system "stty echo"
   puts 'Deploy is complete!'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
