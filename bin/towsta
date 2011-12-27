@@ -65,14 +65,22 @@ if action == 'new'
   Net::HTTP.start("code.jquery.com"){|http| @jquery = http.get('/jquery.min.js').body}
   File.open("#{project}/public/js/jquery.js", 'w') {|f| f.write(@jquery)}
   Dir.mkdir "#{project}/public/images"
+  Dir.mkdir "#{project}/locales"
   git = '*.swp'
   File.open("#{project}/.gitignore", 'w') {|f| f.write(git)}
+  system 'git init'
+  system "heroku create #{project}"
   puts "#{project} is ready to towst!"
 elsif action == 'server'
   port = ARGV[1].nil? ? '6937' : ARGV[1]
   system "shotgun -I config.ru -p #{port}"
 elsif action == 'console'
   system 'irb -r ./app.rb'
+elsif action == 'deploy'
+  system 'git add .'
+  message = ARGV[1].nil? ? 'Deployed via Towsta gem' : ARGV[1]
+  system "git commit -a -m '#{message}'"
+  system 'git push' unless system 'git push heroku master'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
   puts 'towsta server {optional: port}                        to run the application server'
