@@ -87,7 +87,7 @@ elsif action == 'deploy'
   system 'git add . >/dev/null'
   message = ARGV[1].nil? ? 'Deployed via Towsta gem' : ARGV[1]
   system "git commit -a -m '#{message}' >/dev/null"
-  system 'git push >/dev/null' unless system 'git push heroku master >/dev/null'
+  system 'git push -q >/dev/null' unless system 'git push heroku master -q >/dev/null'
   puts 'Deploy is complete!'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
