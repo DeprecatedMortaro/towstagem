@@ -2,6 +2,7 @@
 require 'net/http'
 action = ARGV.first
 if action == 'new'
+  puts "Generating and configuring your app, it may take a while..."
   project = ARGV[1]
   Dir.mkdir project
   configru = "require './app'\n"
@@ -88,6 +89,7 @@ elsif action == 'deploy'
   message = ARGV[1].nil? ? 'Deployed via Towsta gem' : ARGV[1]
   system "git commit -a -m '#{message}' >/dev/null"
   system 'git push -q >/dev/null' unless system 'git push heroku master -q >/dev/null'
+  system 'clear'
   puts 'Deploy is complete!'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
