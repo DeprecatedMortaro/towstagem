@@ -18,7 +18,7 @@ module Towsta
         include R18n::Helpers
 
         def i18n attr
-          self.send (t[:models][self.class.to_s.downcase.to_sym][attr] || "#{attr.to_s}_#{t.code}").to_sym
+          self.send (t.models.send(self.class.to_s.downcase.to_sym).send(attr) || "#{attr.to_s}_#{t.code}").to_sym
         end
 
         def to_mail
