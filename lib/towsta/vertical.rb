@@ -18,7 +18,6 @@ module Towsta
         include R18n::Helpers
 
         def i18n attr
-          return self.send(t[:models][self.class.to_s.downcase.to_sym][attr]) if t.models.send(self.class.to_s.downcase.to_sym).send(attr).translated?
           self.send :"#{attr.to_s}_#{t.code}"
         end
 
