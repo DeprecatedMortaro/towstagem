@@ -19,7 +19,7 @@ module Towsta
 
         def i18n attr
           #self.send :"#{attr.to_s}_#{t.code}"
-          R18n.get
+          session[:locale]
         end
 
         def to_mail
