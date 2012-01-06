@@ -18,8 +18,7 @@ module Towsta
         include R18n::Helpers
 
         def i18n attr
-          #self.send :"#{attr.to_s}_#{t.code}"
-          session[:locale].to_s
+          self.send :"#{attr.to_s}_#{R18n.get.locales.first.code}"
         end
 
         def to_mail
