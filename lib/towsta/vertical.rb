@@ -18,7 +18,8 @@ module Towsta
         include R18n::Helpers
 
         def i18n attr
-          self.send :"#{attr.to_s}_#{t.code}"
+          #self.send :"#{attr.to_s}_#{t.code}"
+          'string'
         end
 
         def to_mail
