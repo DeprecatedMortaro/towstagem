@@ -128,11 +128,7 @@ module Towsta
         end
 
         def method_missing(meth, *args, &block)
-          begin
-            self.send meth.to_sym
-          rescue
-            super
-          end
+          self.send meth.to_sym
         end
 
       end
