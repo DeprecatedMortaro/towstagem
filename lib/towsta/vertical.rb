@@ -127,6 +127,14 @@ module Towsta
           end
         end
 
+        def method_missing(meth, *args, &block)
+          begin
+            self.send meth.to_sym
+          rescue
+            super
+          end
+        end
+
       end
       klass.all = []
       klass.count = args[:count]
