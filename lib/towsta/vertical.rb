@@ -19,7 +19,7 @@ module Towsta
 
         def i18n attr
           #self.send :"#{attr.to_s}_#{t.code}"
-          'string'
+          R18n.get
         end
 
         def to_mail
