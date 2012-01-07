@@ -49,6 +49,7 @@ def sync_with_towsta params=nil
   params ||= {} if $towsta_sync
   $towsta_sync ||= {}
   params = $towsta_sync.merge(params) if params
+  $towsta_cache ||= production?
   if $towsta_cache
     Towsta::Memory.recover params
   else

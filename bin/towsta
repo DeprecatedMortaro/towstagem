@@ -76,6 +76,7 @@ elsif action == 'server'
 elsif action == 'console'
   system 'irb -r ./app.rb'
 elsif action == 'configure'
+  project = %x[pwd].split('/').last.strip
   system "git init"
   system "heroku create" unless system "heroku create #{project}"
   system "heroku addons:add sendgrid:starter"
@@ -84,11 +85,11 @@ elsif action == 'configure'
   system "heroku addons:add zerigo_dns:basic"
   system "bundle install"
 elsif action == 'deploy'
-  system 'towsta configure' unless system('heroku releases')
-  system 'git add . >/dev/null'
+  system 'towsta configure' unless system('heroku stack')
+  system 'git add .'
   message = ARGV[1].nil? ? 'Deployed via Towsta gem' : ARGV[1]
-  system "git commit -a -m '#{message}' >/dev/null"
-  system 'git push -q >/dev/null' unless system 'git push heroku master -q >/dev/null'
+  system "git commit -a -m '#{message}'"
+  system 'git push -q' unless system 'git push heroku master -q'
   puts 'Deploy is complete!'
 elsif action == 'help'
   puts 'towsta new {projectname} {optional: secret}           to generate a new project'
