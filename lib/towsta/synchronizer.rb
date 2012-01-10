@@ -21,7 +21,7 @@ module Towsta
         uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
         return JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
       rescue
-        return {:status => false}
+        return {:status => false, :message => 'Internal Server Error'}
       end
     end
 
