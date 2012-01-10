@@ -17,12 +17,12 @@ module Towsta
     end
 
     def self.save_request export
-      begin
+      #begin
         uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
         return JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
-      rescue
+      #rescue
         return {:status => false, :message => 'Internal Server Error'}
-      end
+      #end
     end
 
     def self.authentication_request params
