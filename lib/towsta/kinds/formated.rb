@@ -4,7 +4,7 @@ module Towsta
     class FormatedKind < MainKind
 
       def set content
-        @content = content.to_s.gsub("\'","'")
+        @content = content.to_s
       end
 
     end

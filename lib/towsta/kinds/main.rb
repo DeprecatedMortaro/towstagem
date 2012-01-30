@@ -14,7 +14,7 @@ module Towsta
       end
 
       def set content
-        @content = content.to_s
+        @content = content.to_s.gsub("\'","'")
       end
 
       def compare object
