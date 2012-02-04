@@ -24,11 +24,11 @@ module Towsta
     end
 
     def self.find_by attr, value
-      self.all.each { |horizontal| horizontal if horizontal.send :"object_of_#{attr}", value }
+      self.all.each { |horizontal| horizontal if horizontal.send(:"object_of_#{attr}").compare value }
     end
 
     def self.find_all_by attr, value
-      self.all.select { |horizontal| horizontal.send :"object_of_#{attr}", value }
+      self.all.select { |horizontal| horizontal.send(:"object_of_#{attr}").compare value }
     end
 
     def self.method_missing m, *args, &block
