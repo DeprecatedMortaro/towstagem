@@ -9,7 +9,7 @@ module Towsta
     def attributes
       horizontal = {}
       self.class.attributes.each do |attr|
-        #slice = eval("self.object_of_#{attr.to_s}")
+        slice = send :"object_of_#{attr.to_s}"
         horizontal[attr] = slice ? slice.export : nil
       end
       horizontal
