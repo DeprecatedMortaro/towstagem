@@ -15,6 +15,12 @@ require 'sinatra/content_for'
 require 'i18n-router'
 require 'pony'
 
+require File.expand_path('../towsta/vertical-core/base', __FILE__)
+require File.expand_path('../towsta/vertical-core/attributes', __FILE__)
+require File.expand_path('../towsta/vertical-core/crud', __FILE__)
+require File.expand_path('../towsta/vertical-core/locales', __FILE__)
+require File.expand_path('../towsta/vertical-core/mail', __FILE__)
+require File.expand_path('../towsta/vertical-core/references', __FILE__)
 require File.expand_path('../towsta/string_extension', __FILE__)
 require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)
@@ -41,9 +47,6 @@ require File.expand_path('../towsta/kinds/video', __FILE__)
 require File.expand_path('../towsta/kinds/multiple', __FILE__)
 
 Dir["./controllers/*.rb"].each {|file| require file}
-
-module Towsta
-end
 
 def sync_with_towsta params=nil
   params ||= {} if $towsta_sync
