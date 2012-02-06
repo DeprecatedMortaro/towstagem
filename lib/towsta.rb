@@ -56,7 +56,8 @@ def sync_with_towsta params=nil
   if $towsta_cache
     Towsta::Memory.recover params
   else
-    Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
+    #Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
+    Towsta::Synchronizer.new secret: $towsta_secret, params: params, request: :all
   end
   Dir["./models/*.rb"].each {|file| load file }
 end

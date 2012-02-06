@@ -7,8 +7,11 @@ module Towsta
       @secret = args[:secret]
       @params = args[:params]
       @cache = args[:cache]
+      @horizontals_only = horizontals_only
       if synchronize
-        create_verticals
+        args[:request] ||= :horizontals
+        create_verticals if [:all, :structure].include? args[:request]
+        populate_verticals if [:all, :horizontals].include? args[:request]
         puts "  Ready to Towst!\n\n"
       else
         puts "  Unable to keep Towsting!\n\n"
@@ -46,8 +49,13 @@ module Towsta
 
     def create_verticals
       return false unless parse_json
-      create_vertical({:name => 'User', :slices => {:id => 'integer', :nick => 'text', :email => 'text'}}, @hash[:users])
-      @hash[:structures].each_with_index {|structure, i| create_vertical(structure, @hash[:verticals][i][:horizontals], @hash[:verticals][i][:occurrences])}
+      Vertical.create name: 'User', slices: {id: 'integer', nick: 'text', email: 'text'}
+      @hash[:structures].each {|structure| Vertical.create structure}
+    end
+
+    def populate_verticals
+      Vertical.populate 'User', @hash[:users]
+      @hash[:structures].each_with_index {|structure, i| Vertical.populate(structure[:name], @hash[:verticals][i][:horizontals], @hash[:verticals][i][:occurrences])}
     end
 
     def remote_string
@@ -94,16 +102,6 @@ module Towsta
         puts '  Something went wrong tryng to parse JSON.'
         return false
       end
-    end
-
-    def create_vertical structure, horizontals, occurrences=[]
-      #Object.instance_eval{ remove_const structure[:name].to_sym } if Object.const_defined?(structure[:name].to_sym)
-      Vertical.create structure
-      #Vertical.all << eval(structure[:name])
-      Vertical.populate structure[:name], horizontals, occurrences
-      #horizontals.each {|horizontal| eval(structure[:name].to_s).new(horizontal)}
-      #occurrences.each {|occurrence| eval(structure[:name].to_s).add_occurrence(occurrence)}
-      #puts "  class #{structure[:name]} was created with #{horizontals.size} instances"
     end
 
   end
