@@ -58,8 +58,8 @@ def sync_with_towsta params=nil
   $towsta_sync ||= {}
   params = $towsta_sync.merge(params) if params
   $towsta_cache ||= production?
-  return Towsta::Memory.recover params if $towsta_cache
-  Towsta::Synchronizer.new secret: $towsta_secret, params: params, request: :horizontals
+  sync = $towsta_cache ? Towsta::Memory.recover(params) : Towsta::Synchronizer.new(secret: $towsta_secret, params: params, request: :horizontals)
+  sync.status
 end
 
 def clear_sync

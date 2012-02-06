@@ -1,7 +1,7 @@
 module Towsta
   class Synchronizer
 
-    attr_accessor :secret, :params, :cache, :response
+    attr_accessor :secret, :params, :cache, :response, :status
 
     def initialize args
       @secret = args[:secret]
@@ -12,8 +12,10 @@ module Towsta
         create_verticals if [:all, :structure].include? args[:request]
         populate_verticals if [:all, :horizontals].include? args[:request]
         puts "  Ready to Towst!\n\n"
+        @status = true
       else
         puts "  Unable to keep Towsting!\n\n"
+        @status = false
       end
     end
 
