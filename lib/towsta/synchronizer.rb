@@ -38,11 +38,10 @@ module Towsta
     private
 
     def synchronize
-      has_secret && (cache_string || remote_string) && validate_secret && validate_response
+      has_secret && (cache_string || remote_string) && validate_secret && validate_response && parse_json
     end
 
     def create_verticals
-      return false unless parse_json
       Vertical.create name: 'User', slices: {id: 'integer', nick: 'text', email: 'text'}
       @hash[:structures].each {|structure| Vertical.create structure}
     end
