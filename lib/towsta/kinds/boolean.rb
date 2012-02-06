@@ -4,7 +4,8 @@ module Towsta
     class BooleanKind < MainKind
 
       def set content
-        @content = content == '1'
+        return @content = content if [TrueClass, FalseClass].include? content.class
+        @content = content.to_i == 1
       end
 
       def export

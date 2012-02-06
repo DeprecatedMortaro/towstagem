@@ -4,7 +4,6 @@ module Towsta
     attr_accessor :secret, :params, :cache, :response
 
     def initialize args
-      Vertical.all = []
       @secret = args[:secret]
       @params = args[:params]
       @cache = args[:cache]
@@ -98,12 +97,13 @@ module Towsta
     end
 
     def create_vertical structure, horizontals, occurrences=[]
-      Object.instance_eval{ remove_const structure[:name].to_sym } if Object.const_defined?(structure[:name].to_sym)
+      #Object.instance_eval{ remove_const structure[:name].to_sym } if Object.const_defined?(structure[:name].to_sym)
       Vertical.create structure
-      Vertical.all << eval(structure[:name])
-      horizontals.each {|horizontal| eval(structure[:name].to_s).new(horizontal)}
-      occurrences.each {|occurrence| eval(structure[:name].to_s).add_occurrence(occurrence)}
-      puts "  class #{structure[:name]} was created with #{horizontals.size} instances"
+      #Vertical.all << eval(structure[:name])
+      Vertical.populate structure[:name], horizontals, occurrences
+      #horizontals.each {|horizontal| eval(structure[:name].to_s).new(horizontal)}
+      #occurrences.each {|occurrence| eval(structure[:name].to_s).add_occurrence(occurrence)}
+      #puts "  class #{structure[:name]} was created with #{horizontals.size} instances"
     end
 
   end

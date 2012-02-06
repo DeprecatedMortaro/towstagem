@@ -15,9 +15,8 @@ module Towsta
       end
 
       def export
-        string = '['
-        @content.each {|con| string << "#{con.to_s},"}
-        "#{string[0..-2]}]"
+        return '' if @content.class == Array && @content.empty?
+        "[#{@content.join ','}]"
       end
 
     end

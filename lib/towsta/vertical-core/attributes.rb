@@ -6,6 +6,8 @@ module Towsta
       attr_accessor :attributes
     end
 
+    self.attributes ||= []
+
     def attributes
       horizontal = {}
       self.class.attributes.each do |attr|
@@ -25,7 +27,7 @@ module Towsta
     end
 
     def self.define_attribute attr, kind
-      self.class_eval "
+      self.class_eval("
 
         def #{attr}= value
           @#{attr} ||= Towsta::Kinds::#{kind[0].upcase + kind[1..-1]}Kind.new
@@ -40,7 +42,9 @@ module Towsta
           @#{attr}
         end
 
-      "
+      ")
+      self.attributes ||= []
+      self.attributes << attr.to_sym
     end
 
   end

@@ -4,17 +4,15 @@ module Towsta
     class UserKind < MainKind
 
       def get
+        return nil unless @content
         return @content if @content.class == User
-        user = User.find @content.to_i
-        @content = user if user
-        @content
+        @content = User.find_by_id @content
       end
 
       def set content
         return @content = content if content.class == User
-        return @content = content.to_i if content.to_i != 0
-        @content = nil
-        @content = content
+        return @content = nil if !!(content =~ /[^0-9]/)
+        return @content = content.to_i
       end
 
       def compare object
@@ -23,8 +21,8 @@ module Towsta
       end
 
       def export
-        return @content.id.to_s if self.get.class == User
-        @content.to_s
+        return get.id.to_s if get.class == User
+        get.to_s
       end
 
     end

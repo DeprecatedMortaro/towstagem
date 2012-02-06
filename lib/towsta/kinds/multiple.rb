@@ -5,21 +5,17 @@ module Towsta
 
       attr_accessor :content
 
-      def initialize content=nil
-        self.set content
-      end
-
       def get
         return @content if @content.class == Array
+        return [] if !!(@content =~ /[^0-9 ]/)
         aux = []
         @content.to_s.split(' ').each do |i|
           Vertical.all.each do |v|
-            horizontal = v.find_by_id i
+            horizontal = v.find_by_id i.to_i
             aux << horizontal if horizontal
           end
         end
         @content = aux
-        @content
       end
 
       def set content
@@ -28,10 +24,7 @@ module Towsta
       end
 
       def export
-        return @content.to_s if @content.class != Array
-        aux = ''
-        @content.each {|c| aux << c.id}
-        aux
+        get.collect{|c| c.id}.join ' '
       end
 
     end

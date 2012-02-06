@@ -2,7 +2,7 @@ module Towsta
 
   class VerticalCore
 
-    def initialize args
+    def initialize args={}
       self.attributes.merge(args).each {|k,v| self.send("#{k}=".to_sym, v)}
       self.class.all << self
     end
