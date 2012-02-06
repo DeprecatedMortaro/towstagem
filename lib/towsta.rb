@@ -46,6 +46,8 @@ require File.expand_path('../towsta/kinds/vertical', __FILE__)
 require File.expand_path('../towsta/kinds/video', __FILE__)
 require File.expand_path('../towsta/kinds/multiple', __FILE__)
 
+require "./towsta.rb"
+
 Towsta::Synchronizer.new secret: $towsta_secret, params: {}, request: :structure
 
 Dir["./controllers/*.rb"].each {|file| require file}
