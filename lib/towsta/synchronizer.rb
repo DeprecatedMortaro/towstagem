@@ -38,12 +38,7 @@ module Towsta
     private
 
     def synchronize
-      if has_secret && (cache_string || remote_string)
-        return false unless validate_secret
-        return false unless validate_response
-        return true
-      end
-      false
+      has_secret && (cache_string || remote_string) && validate_secret && validate_response
     end
 
     def create_verticals
