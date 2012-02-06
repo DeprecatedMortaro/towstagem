@@ -7,7 +7,6 @@ module Towsta
       @secret = args[:secret]
       @params = args[:params]
       @cache = args[:cache]
-      @horizontals_only = horizontals_only
       if synchronize
         args[:request] ||= :horizontals
         create_verticals if [:all, :structure].include? args[:request]
