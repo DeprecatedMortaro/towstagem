@@ -46,20 +46,18 @@ require File.expand_path('../towsta/kinds/vertical', __FILE__)
 require File.expand_path('../towsta/kinds/video', __FILE__)
 require File.expand_path('../towsta/kinds/multiple', __FILE__)
 
+Towsta::Synchronizer.new secret: $towsta_secret, params: params, request: :structure
+
 Dir["./controllers/*.rb"].each {|file| require file}
+Dir["./models/*.rb"].each {|file| load file }
 
 def sync_with_towsta params=nil
   params ||= {} if $towsta_sync
   $towsta_sync ||= {}
   params = $towsta_sync.merge(params) if params
   $towsta_cache ||= production?
-  if $towsta_cache
-    Towsta::Memory.recover params
-  else
-    #Towsta::Synchronizer.new :secret => $towsta_secret, :path => $towsta_path, :params => params
-    Towsta::Synchronizer.new secret: $towsta_secret, params: params, request: :all
-  end
-  Dir["./models/*.rb"].each {|file| load file }
+  return Towsta::Memory.recover params if $towsta_cache
+  Towsta::Synchronizer.new secret: $towsta_secret, params: params, request: :horizontals
 end
 
 def clear_sync
