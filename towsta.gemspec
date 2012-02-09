@@ -27,9 +27,11 @@ Gem::Specification.new do |s|
   s.add_dependency "pony"
   s.add_dependency "coffee-script"
   s.add_dependency "therubyracer"
+  s.add_dependency "active_support"
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'shotgun'
+  s.add_development_dependency 'heroku'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

@@ -14,6 +14,7 @@ require 'compass'
 require 'sinatra/content_for'
 require 'i18n-router'
 require 'pony'
+require 'active_support/all'
 
 require File.expand_path('../towsta/vertical-core/base', __FILE__)
 require File.expand_path('../towsta/vertical-core/attributes', __FILE__)
@@ -46,22 +47,18 @@ require File.expand_path('../towsta/kinds/vertical', __FILE__)
 require File.expand_path('../towsta/kinds/video', __FILE__)
 require File.expand_path('../towsta/kinds/multiple', __FILE__)
 
-require "./towsta.rb"
+module Towsta
+  mattr_accessor :secret, :global, :author
+end
+
+require "./towsta.rb" unless test?
 
 Towsta::Synchronizer.new secret: $towsta_secret, params: {}, request: :structure
 
 Dir["./controllers/*.rb"].each {|file| require file}
 Dir["./models/*.rb"].each {|file| load file }
 
-def sync_with_towsta params=nil
-  params ||= {} if $towsta_sync
-  $towsta_sync ||= {}
-  params = $towsta_sync.merge(params) if params
-  $towsta_cache ||= production?
-  sync = $towsta_cache ? Towsta::Memory.recover(params) : Towsta::Synchronizer.new(secret: $towsta_secret, params: params, request: :horizontals)
+def sync_with_towsta params={}
+  sync = $towsta_cache ? Towsta::Memory.recover(params) : Towsta::Synchronizer.new(params: params, request: :horizontals)
   sync.status
-end
-
-def clear_sync
-  Towsta::Memory.flush
 end

@@ -1,11 +1,10 @@
 module Towsta
   class Synchronizer
 
-    attr_accessor :secret, :params, :cache, :response, :status
+    attr_accessor :params, :cache, :response, :status
 
-    def initialize args
-      @secret = args[:secret]
-      @params = args[:params]
+    def initialize args={}
+      @params = solve_params args[:params]
       @cache = args[:cache]
       if synchronize
         args[:request] ||= :horizontals
@@ -21,19 +20,19 @@ module Towsta
 
     def self.save_request export
       begin
-        uri = URI.parse("http://manager.towsta.com/synchronizers/#{$towsta_secret}/import.json")
-        return JSON.parse Net::HTTP.post_form(uri, {:code => export.to_json}).body.to_s, :symbolize_names => true
+        uri = URI.parse("http://manager.towsta.com/synchronizers/#{Towsta.secret}/import.json")
+        return JSON.parse Net::HTTP.post_form(uri, {code: export.to_json}).body.to_s, symbolize_names: true
       rescue
-        return {:status => false, :message => 'Internal Server Error'}
+        return {status: false, message: 'Internal Server Error'}
       end
     end
 
     def self.authentication_request params
       begin
         uri = URI.parse("http://manager.towsta.com/authenticate")
-        return JSON.parse Net::HTTP.post_form(uri, params).body.to_s, :symbolize_names => true
+        return JSON.parse Net::HTTP.post_form(uri, params).body.to_s, symbolize_names: true
       rescue
-        return {:status => false}
+        return {status: false}
       end
     end
 
@@ -41,6 +40,11 @@ module Towsta
 
     def synchronize
       has_secret && (cache_string || remote_string) && validate_secret && validate_response && parse_json
+    end
+
+    def solve_params(params)
+      return params unless Towsta.global
+      Towsta.global.merge (params || {})
     end
 
     def create_verticals
@@ -55,7 +59,7 @@ module Towsta
 
     def remote_string
       begin
-        uri = "/synchronizers/#{@secret}/#{Time.now.to_i}/export.json"
+        uri = "/synchronizers/#{Towsta.secret}/#{Time.now.to_i}/export.json"
         uri += "?query=#{CGI::escape(@params.to_json)}" if @params
         @response = Net::HTTP.start("manager.towsta.com"){|http| @json = http.get(uri).body}
         puts "\nSynchronized with Towsta!"
@@ -84,14 +88,14 @@ module Towsta
     end
 
     def has_secret
-      return true if @secret
+      return true if Towsta.secret
       puts "\nyou cant synchronize without a secret..."
       false
     end
 
     def parse_json
       begin
-        @hash = JSON.parse @response, :symbolize_names => true
+        @hash = JSON.parse @response, symbolize_names: true
         return true
       rescue
         puts '  Something went wrong tryng to parse JSON.'
