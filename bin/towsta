@@ -18,7 +18,7 @@ if action == 'new'
   apprb += "  haml :index\n"
   apprb += "end\n"
   File.open("#{project}/app.rb", 'w') {|f| f.write(apprb) }
-  towstarb += "Towsta.secret = '#{ARGV[2]}'\n"
+  towstarb = "Towsta.secret = '#{ARGV[2]}'\n"
   towstarb += "#Towsta.author = 'default_author_email'\n"
   towstarb += "#Towsta.global = {}"
   File.open("#{project}/towsta.rb", 'w') {|f| f.write(towstarb) }
