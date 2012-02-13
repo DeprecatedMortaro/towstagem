@@ -39,7 +39,7 @@ helpers do
 end
 
 post '/flush' do
-  clear_sync
+  Towsta::Memory.flush
   'CLEAR'
 end
 

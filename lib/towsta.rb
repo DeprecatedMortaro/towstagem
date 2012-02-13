@@ -1,5 +1,4 @@
 #coding: utf-8
-require 'dalli'
 require 'digest/md5'
 require 'net/http'
 require 'cgi'
@@ -25,7 +24,6 @@ require File.expand_path('../towsta/vertical-core/references', __FILE__)
 require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)
 require File.expand_path('../towsta/synchronizer', __FILE__)
-require File.expand_path('../towsta/memory', __FILE__)
 require File.expand_path('../towsta/sinatra_extension', __FILE__)
 require File.expand_path('../towsta/login', __FILE__)
 require File.expand_path('../towsta/kinds/boolean', __FILE__)
@@ -50,14 +48,4 @@ module Towsta
   mattr_accessor :secret, :global, :author
 end
 
-require "./towsta.rb" unless test?
-
-Towsta::Synchronizer.new secret: $towsta_secret, params: {}, request: :structure
-
-Dir["./controllers/*.rb"].each {|file| require file}
-Dir["./models/*.rb"].each {|file| load file }
-
-def sync_with_towsta params={}
-  sync = $towsta_cache ? Towsta::Memory.recover(params) : Towsta::Synchronizer.new(params: params, request: :horizontals)
-  sync.status
-end
+require File.expand_path("../towsta/envs/#{ENV['RACK_ENV'].downcase}", __FILE__)

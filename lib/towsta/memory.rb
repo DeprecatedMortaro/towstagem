@@ -1,5 +1,3 @@
-set :cache, Dalli::Client.new
-
 module Towsta
 
   class Memory
