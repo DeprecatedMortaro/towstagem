@@ -4,7 +4,7 @@ module Towsta
 
     attr_accessor :message
 
-    def update args, author=$towsta_default_author
+    def update args, author=Towsta.author
       args.each {|k,v| self.send("#{k}=".to_sym, v)}
       self.save author
     end
@@ -13,7 +13,7 @@ module Towsta
       #to-do
     end
 
-    def save creator=$towsta_default_author
+    def save creator=Towsta.author
       creator = author.email if author
       export = self.attributes
       export.delete :author
@@ -26,11 +26,11 @@ module Towsta
       @message = response[:message]
       self.id = response[:id] if response[:status]
       self.author = User.find_by_email creator
-      Towsta::Memory.flush if $towsta_cache
+      Towsta::Memory.flush if production?
       response[:status]
     end
 
-    def self.create args, creator=$towsta_default_author
+    def self.create args, creator=Towsta.author
       new = self.new(args.merge(:id => nil))
       new.save creator
       new
