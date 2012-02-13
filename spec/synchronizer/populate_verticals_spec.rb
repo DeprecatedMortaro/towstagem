@@ -1,7 +1,10 @@
 describe Towsta::Synchronizer do
 
-  before(:all) {Net::HTTP.stub(:start).and_return(File.read('./spec/webmock.json'))}
-  before(:all) {Towsta::Synchronizer.new(params: {}, request: :all)}
+  before :all do
+    Net::HTTP.stub(:start).and_return(File.read('./spec/webmock.json'))
+    Towsta::Vertical.clear
+    Towsta::Synchronizer.new(params: {}, request: :all)
+  end
 
   describe '#create_verticals' do
 

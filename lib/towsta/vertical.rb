@@ -2,9 +2,7 @@ module Towsta
 
   class Vertical
 
-    class << self
-      attr_accessor :all
-    end
+    cattr_accessor :all
 
     self.all ||= []
 
