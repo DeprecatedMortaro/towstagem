@@ -48,4 +48,4 @@ module Towsta
   mattr_accessor :secret, :global, :author
 end
 
-require File.expand_path("../towsta/envs/#{ENV['RACK_ENV'].downcase}", __FILE__)
+require File.expand_path("../towsta/envs/#{ENV['RACK_ENV'] || 'development'}", __FILE__)
