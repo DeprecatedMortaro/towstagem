@@ -42,6 +42,15 @@ module Towsta
           @#{attr}
         end
 
+        def self.find_by_#{attr}, value
+          self.all.each { |horizontal| return horizontal if horizontal.object_of_#{attr}.compare value }
+          nil
+        end
+
+        def self.find_all_by_#{attr}, value
+          self.all.select { |horizontal| horizontal.object_of_#{attr}.compare value }
+        end
+
       ")
       self.attributes ||= []
       self.attributes << attr.to_sym
