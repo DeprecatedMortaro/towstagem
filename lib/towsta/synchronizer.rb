@@ -53,7 +53,7 @@ module Towsta
     end
 
     def populate_verticals
-      Vertical.populate 'User', @hash[:users]
+      Vertical.populate 'User', @hash[:users], @hash[:users].size
       @hash[:structures].each_with_index {|structure, i| Vertical.populate(structure[:name], @hash[:verticals][i][:horizontals], structure[:count], @hash[:verticals][i][:occurrences])}
     end
 
