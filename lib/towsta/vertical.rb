@@ -14,9 +14,10 @@ module Towsta
       puts "  class #{args[:name]} was created"
     end
 
-    def self.populate classname, horizontals, occurrences = []
+    def self.populate classname, horizontals, count, occurrences = []
       klass = Kernel.const_get classname.to_s
       klass.all = []
+      klass.count = count
       horizontals.each {|horizontal| klass.new(horizontal)}
       occurrences.each {|occurrence| klass.add_occurrence(occurrence)}
       puts "  class #{classname} was populated with #{horizontals.size} instances"

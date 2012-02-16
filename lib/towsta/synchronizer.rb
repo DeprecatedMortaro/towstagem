@@ -54,7 +54,7 @@ module Towsta
 
     def populate_verticals
       Vertical.populate 'User', @hash[:users]
-      @hash[:structures].each_with_index {|structure, i| Vertical.populate(structure[:name], @hash[:verticals][i][:horizontals], @hash[:verticals][i][:occurrences])}
+      @hash[:structures].each_with_index {|structure, i| Vertical.populate(structure[:name], @hash[:verticals][i][:horizontals], structure[:count], @hash[:verticals][i][:occurrences])}
     end
 
     def remote_string
