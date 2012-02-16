@@ -11,6 +11,7 @@ module Towsta
         puts "\nCreating cache"
         syn = Towsta::Synchronizer.new params: params, request: :horizontals
         settings.cache.set(md5,syn.response)
+        syn
       end
     end
 
