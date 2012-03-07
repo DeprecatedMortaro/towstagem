@@ -22,7 +22,7 @@ module Towsta
       end
 
       def compare_parameterized object
-        self.get.to_s.parameterized == object.to_s.parameterized
+        self.get.to_s.parameterize == object.to_s.parameterize
       end
 
       def export
