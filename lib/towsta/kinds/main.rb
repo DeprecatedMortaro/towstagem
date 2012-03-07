@@ -21,6 +21,10 @@ module Towsta
         self.get == object
       end
 
+      def compare_parameterized object
+        self.get.to_s.parameterized == object.to_s.parameterized
+      end
+
       def export
         @content.to_s
       end

@@ -47,6 +47,11 @@ module Towsta
           nil
         end
 
+        def self.find_by_parameterized_#{attr} value
+          self.all.each { |horizontal| return horizontal if horizontal.object_of_#{attr}.compare_parameterized value }
+          nil
+        end
+
         def self.find_all_by_#{attr} value
           self.all.select { |horizontal| horizontal.object_of_#{attr}.compare value }
         end
