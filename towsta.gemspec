@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
   s.homepage    = "http://rubygems.org/gems/towsta"
   s.summary     = %q{Api Integration gem with towsta}
   s.description = %q{Simply integrates the towsta api}
-  s.platform    = $platform || RUBY_PLATFORM[/java/] || 'ruby'
 
   s.rubyforge_project = "towsta"
 
@@ -32,8 +31,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'shotgun'
   s.add_development_dependency 'heroku'
-
-  s.add_dependency "therubyracer" if true#!!s.platform.match("win32")
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
