@@ -17,20 +17,11 @@ Gem::Specification.new do |s|
 
   s.add_dependency "json"
   s.add_dependency "bresson"
-  s.add_dependency "compass"
-  s.add_dependency "haml"
-  s.add_dependency "sinatra"
   s.add_dependency "cameraman"
-  s.add_dependency "sinatra-content-for"
-  s.add_dependency "i18n-router"
-  s.add_dependency "pony"
-  s.add_dependency "coffee-script"
   s.add_dependency "active_support"
   s.add_dependency 'dalli'
 
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'shotgun'
-  s.add_development_dependency 'heroku'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

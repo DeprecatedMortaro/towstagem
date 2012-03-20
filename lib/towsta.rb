@@ -1,18 +1,8 @@
 #coding: utf-8
-require 'digest/md5'
 require 'net/http'
-require 'cgi'
 require 'json'
-require 'time'
-require 'date'
-require 'time'
 require 'bresson'
 require 'cameraman'
-require 'sinatra'
-require 'compass'
-require 'sinatra/content_for'
-require 'i18n-router'
-require 'pony'
 require 'active_support/all'
 
 require File.expand_path('../towsta/vertical-core/base', __FILE__)
@@ -24,8 +14,8 @@ require File.expand_path('../towsta/vertical-core/references', __FILE__)
 require File.expand_path('../towsta/kinds/main', __FILE__)
 require File.expand_path('../towsta/vertical', __FILE__)
 require File.expand_path('../towsta/synchronizer', __FILE__)
-require File.expand_path('../towsta/sinatra_extension', __FILE__)
 require File.expand_path('../towsta/login', __FILE__)
+require File.expand_path('../towsta/shell', __FILE__)
 require File.expand_path('../towsta/kinds/boolean', __FILE__)
 require File.expand_path('../towsta/kinds/date', __FILE__)
 require File.expand_path('../towsta/kinds/datetime', __FILE__)
