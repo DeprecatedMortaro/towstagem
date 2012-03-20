@@ -2,7 +2,7 @@ module Towsta
 
   class VerticalCore
 
-    include R18n::Helpers
+    include R18n::Helpers rescue nil
 
     def i18n attr
       self.send :"#{attr.to_s}_#{R18n.get.locales.first.code}"
