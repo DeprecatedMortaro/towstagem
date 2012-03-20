@@ -17,7 +17,7 @@ module Towsta
 
     def self.add_gem
       gemfile = File.read("Gemfile") << "\ngem 'towsta'"
-      File.open("Gemfile", 'w') {|f| f.write(code)}
+      File.open("Gemfile", 'w') {|f| f.write(gemfile)}
     end
 
     def self.change_index
