@@ -3,7 +3,6 @@ module Towsta
     def self.sinatra_init *args
       towsta_rb 'configs'
       add_gem
-      change_index
       system 'bundle install'
     end
 
@@ -18,15 +17,6 @@ module Towsta
     def self.add_gem
       gemfile = File.read("Gemfile") << "\ngem 'towsta'"
       File.open("Gemfile", 'w') {|f| f.write(gemfile)}
-    end
-
-    def self.change_index
-      file = "views/index.haml"
-      index = File.read file
-      if index.lines.first =~ /Frankstein sinatra is singing /
-        index << ' to #{User.first.nick}'
-        File.open(file, 'w') {|f| f.write(index)}
-      end
     end
   end
 end
