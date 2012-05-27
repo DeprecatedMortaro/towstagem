@@ -1,41 +1,18 @@
 #coding: utf-8
-require 'net/http'
-require 'json'
-require 'bresson'
-require 'cameraman'
-require 'active_support/all'
-
-require File.expand_path('../towsta/vertical-core/base', __FILE__)
-require File.expand_path('../towsta/vertical-core/attributes', __FILE__)
-require File.expand_path('../towsta/vertical-core/crud', __FILE__)
-require File.expand_path('../towsta/vertical-core/locales', __FILE__)
-require File.expand_path('../towsta/vertical-core/mail', __FILE__)
-require File.expand_path('../towsta/vertical-core/references', __FILE__)
-require File.expand_path('../towsta/kinds/main', __FILE__)
-require File.expand_path('../towsta/vertical', __FILE__)
-require File.expand_path('../towsta/synchronizer', __FILE__)
-require File.expand_path('../towsta/login', __FILE__)
-require File.expand_path('../towsta/shell', __FILE__)
-require File.expand_path('../towsta/kinds/boolean', __FILE__)
-require File.expand_path('../towsta/kinds/date', __FILE__)
-require File.expand_path('../towsta/kinds/datetime', __FILE__)
-require File.expand_path('../towsta/kinds/file', __FILE__)
-require File.expand_path('../towsta/kinds/formated', __FILE__)
-require File.expand_path('../towsta/kinds/gallery', __FILE__)
-require File.expand_path('../towsta/kinds/image', __FILE__)
-require File.expand_path('../towsta/kinds/integer', __FILE__)
-require File.expand_path('../towsta/kinds/link', __FILE__)
-require File.expand_path('../towsta/kinds/list', __FILE__)
-require File.expand_path('../towsta/kinds/money', __FILE__)
-require File.expand_path('../towsta/kinds/password', __FILE__)
-require File.expand_path('../towsta/kinds/text', __FILE__)
-require File.expand_path('../towsta/kinds/user', __FILE__)
-require File.expand_path('../towsta/kinds/vertical', __FILE__)
-require File.expand_path('../towsta/kinds/video', __FILE__)
-require File.expand_path('../towsta/kinds/multiple', __FILE__)
+files = %w(cgi net/http json bresson cameraman active_support/all)
+files.each {|file| require file}
 
 module Towsta
-  mattr_accessor :secret, :global, :author
+  mattr_accessor :secret, :global, :author, :models_path
 end
 
-require File.expand_path("../towsta/envs/#{ENV['RACK_ENV'] || 'development'}", __FILE__)
+files = %w(base attributes crud mail references)
+files.each {|file| require "towsta/core/#{file}"}
+
+files = %w(version synchronizer vertical sync_with_towsta)
+files.each {|file| require "towsta/#{file}"}
+
+files = %w(main boolean date datetime file formated gallery image integer link list money multiple password text user vertical video)
+files.each {|file| require "towsta/kinds/#{file}"}
+
+require 'towsta/frameworks/rails' if defined? Rails

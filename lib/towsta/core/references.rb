@@ -1,12 +1,12 @@
 module Towsta
 
-  class VerticalCore
+  class Core
 
     class << self
       attr_accessor :all, :count
     end
 
-    self.all ||= []
+    self.all = []
 
     def self.first
       self.all.first

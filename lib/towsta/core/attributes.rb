@@ -1,12 +1,10 @@
 module Towsta
 
-  class VerticalCore
+  class Core
 
     class << self
       attr_accessor :attributes
     end
-
-    self.attributes ||= []
 
     def attributes
       horizontal = {}

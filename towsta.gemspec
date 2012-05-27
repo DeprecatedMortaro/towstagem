@@ -10,16 +10,13 @@ Gem::Specification.new do |s|
   s.authors     = ["Mortaro"]
   s.email       = ["mortaro@towsta.com"]
   s.homepage    = "http://rubygems.org/gems/towsta"
-  s.summary     = %q{Api Integration gem with towsta}
-  s.description = %q{Simply integrates the towsta api}
+  s.summary     = %q{Towsta's Api Integration Gem}
+  s.description = %q{Simply integrates the Towsta api}
 
   s.rubyforge_project = "towsta"
 
-  s.add_dependency "json"
   s.add_dependency "bresson"
   s.add_dependency "cameraman"
-  s.add_dependency "active_support"
-  s.add_dependency 'dalli'
 
   s.add_development_dependency 'rspec'
 

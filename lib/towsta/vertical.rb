@@ -2,16 +2,13 @@ module Towsta
 
   class Vertical
 
-    cattr_accessor :all
-
-    self.all ||= []
-
     def self.create args
-      klass = Class.new(VerticalCore) { args[:slices].each { |attr, kind| define_attribute attr, kind } }
+      model_file = Towsta.models_path + args[:name].underscore + '.rb'
+      File.open(model_file, 'w') {|f| f.write("class #{args[:name]} < Towsta::Core\nend")} unless File.exists? model_file
+      require model_file
+      klass = Object.const_get args[:name]
+      args[:slices].each { |attr, kind| klass.define_attribute attr, kind }
       klass.all = []
-      Vertical.all << klass
-      Object.const_set args[:name], klass
-      puts "  class #{args[:name]} was created"
     end
 
     def self.populate classname, horizontals, count, occurrences = []

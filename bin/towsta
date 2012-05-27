@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-require 'towsta'
-
-Towsta::Shell.send ARGV.first, ARGV.last

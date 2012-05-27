@@ -1,6 +1,6 @@
 module Towsta
 
-  class VerticalCore
+  class Core
 
     attr_accessor :message
 
@@ -26,7 +26,6 @@ module Towsta
       @message = response[:message]
       self.id = response[:id] if response[:status]
       self.author = User.find_by_email creator
-      #Towsta::Memory.flush if production?
       response[:status]
     end
 
