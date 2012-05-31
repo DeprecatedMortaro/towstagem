@@ -10,7 +10,7 @@ module Towsta
         return [] if !!(@content =~ /[^0-9 ]/)
         aux = []
         @content.to_s.split(' ').each do |i|
-          Vertical.all.each do |v|
+          Towsta::Core.subclasses.each do |v|
             horizontal = v.find_by_id i.to_i
             aux << horizontal if horizontal
           end
