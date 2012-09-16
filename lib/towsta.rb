@@ -12,7 +12,7 @@ files.each {|file| require "towsta/core/#{file}"}
 files = %w(version synchronizer vertical sync_with_towsta)
 files.each {|file| require "towsta/#{file}"}
 
-files = %w(main boolean date datetime file formated gallery image integer link list money multiple password text user vertical video)
+files = %w(main boolean date datetime file formated gallery image integer link list money multiple password text user vertical video select)
 files.each {|file| require "towsta/kinds/#{file}"}
 
 require 'towsta/frameworks/rails' if defined? Rails
