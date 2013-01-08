@@ -22,6 +22,7 @@ module Towsta
       begin
         return Rails.cache.fetch export.to_s do
           uri = URI.parse("http://manager.towsta.com/synchronizers/#{Towsta.secret}/import.json")
+          puts "\n\n\n\n++++++++++++++++++++++++#{Time.now}++++++++++++++++\n\n\n\n"
           JSON.parse Net::HTTP.post_form(uri, {code: export.to_json}).body.to_s, symbolize_names: true
         end
       rescue
