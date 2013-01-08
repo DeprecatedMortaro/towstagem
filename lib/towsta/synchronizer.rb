@@ -20,8 +20,10 @@ module Towsta
 
     def self.save_request export
       begin
-        uri = URI.parse("http://manager.towsta.com/synchronizers/#{Towsta.secret}/import.json")
-        return JSON.parse Net::HTTP.post_form(uri, {code: export.to_json}).body.to_s, symbolize_names: true
+        return Rails.cache.fetch export.to_s do
+          uri = URI.parse("http://manager.towsta.com/synchronizers/#{Towsta.secret}/import.json")
+          JSON.parse Net::HTTP.post_form(uri, {code: export.to_json}).body.to_s, symbolize_names: true
+        end
       rescue
         return {status: false, message: 'Internal Server Error'}
       end
