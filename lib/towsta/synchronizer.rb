@@ -45,6 +45,7 @@ module Towsta
     def synchronize
       if Rails.cache.read(sync_code)
         @hash = Rails.cache.read(sync_code)
+        puts "--> Using cache to Towst"
         return true
       end
       has_secret && (cache_string || remote_string) && validate_secret && validate_response && parse_json
