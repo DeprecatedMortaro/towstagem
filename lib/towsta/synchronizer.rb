@@ -20,11 +20,8 @@ module Towsta
 
     def self.save_request export
       begin
-        return Rails.cache.fetch export.to_s do
-          uri = URI.parse("http://manager.towsta.com/synchronizers/#{Towsta.secret}/import.json")
-          puts "\n\n\n\n++++++++++++++++++++++++#{Time.now}++++++++++++++++\n\n\n\n"
-          JSON.parse Net::HTTP.post_form(uri, {code: export.to_json}).body.to_s, symbolize_names: true
-        end
+        uri = URI.parse("http://manager.towsta.com/synchronizers/#{Towsta.secret}/import.json")
+        return JSON.parse Net::HTTP.post_form(uri, {code: export.to_json}).body.to_s, symbolize_names: true
       rescue
         return {status: false, message: 'Internal Server Error'}
       end
@@ -41,7 +38,15 @@ module Towsta
 
     private
 
+    def sync_code
+      Digest::MD5.hexdigest @params.to_s
+    end
+
     def synchronize
+      if Rails.cache.read(sync_code)
+        @hash = Rails.cache.read(sync_code)
+        return true
+      end
       has_secret && (cache_string || remote_string) && validate_secret && validate_response && parse_json
     end
 
@@ -99,6 +104,7 @@ module Towsta
     def parse_json
       begin
         @hash = JSON.parse @response, symbolize_names: true
+        Rails.cache.write(sync_code, @hash)
         return true
       rescue
         puts '  Something went wrong tryng to parse JSON.'

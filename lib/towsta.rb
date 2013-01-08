@@ -1,9 +1,9 @@
 #coding: utf-8
-files = %w(cgi net/http json bresson cameraman active_support/all)
+files = %w(cgi net/http json bresson cameraman active_support/all digest/md5)
 files.each {|file| require file}
 
 module Towsta
-  mattr_accessor :secret, :global, :author, :models_path, :env
+  mattr_accessor :secret, :global, :author, :models_path, :env, :cache
 end
 
 files = %w(base attributes crud mail references)
